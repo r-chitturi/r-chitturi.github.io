@@ -44,10 +44,10 @@ The following images were generated using the NCC metric.
 
 | Name | Image and Offset | Name | Image and Offset |
 | :---: |  :----: | :---: | :---: |
-| Cathedral | ![](media/out_cathedral.jpg) G: (5, 2) <br> R: (12, 3) | Church | ![](media/out_church1.jpg) G: (40, 26) <br> R: (88, 37) |
-| Emir | ![](media/out_emir_ncc.jpg) G: (37, 20) <br> R: (101, -263) | Harvesters | ![](media/out_harvesters.jpg) G: (47, 14) <br> R: (118, 8) |
-| Icon | ![](media/out_icon.jpg) G: (34, 15) <br> R: (79, 21) | Lady | ![](media/out_lady_nocontrast.jpg) G: (33, 8) <br> R: (96, 6) |
-| Melons | ![](media/out_melons.jpg) G: (82, 2) <br> R: (179, 8) | Monastery | ![](media/out_monastery.jpg) G: (-3, 2) <br> R: (3, 2) |
-| Onion Church | ![](media/out_onionchurch1.jpg) G: (40, 26) <br> R: (97, 33) | Sculpture | ![](media/out_sculpture.jpg) G: (30, -8) <br> R: (143, -24) |
-| Self-Portrait | ![](media/out_selfportrait.jpg) G: (70, 25) <br> R: (173, 34) | Three Generations | ![](media/out_threegenerations.jpg) G: (53, 11) <br> R: (118, 10) |
-| Tobolsk | ![](media/out_tobolsk.jpg) G: (3, 3) <br> R: (6, 3) | Train | ![](media/out_train.jpg) G: (41, 0) <br> R: (97, 10) |
+| Cathedral | ![](media/out_cathedral.jpg) <br> G: (5, 2) <br> R: (12, 3) | Church | ![](media/out_church1.jpg) <br> G: (40, 26) <br> R: (88, 37) |
+| Emir | ![](media/out_emir_ncc.jpg) <br> G: (37, 20) <br> R: (101, -263) | Harvesters | ![](media/out_harvesters.jpg) <br> G: (47, 14) <br> R: (118, 8) |
+| Icon | ![](media/out_icon.jpg) <br> G: (34, 15) <br> R: (79, 21) | Lady | ![](media/out_lady_nocontrast.jpg) <br> G: (33, 8) <br> R: (96, 6) |
+| Melons | ![](media/out_melons.jpg) <br> G: (82, 2) <br> R: (179, 8) | Monastery | ![](media/out_monastery.jpg) <br> G: (-3, 2) <br> R: (3, 2) |
+| Onion Church | ![](media/out_onionchurch1.jpg) <br> G: (40, 26) <br> R: (97, 33) | Sculpture | ![](media/out_sculpture.jpg) <br> G: (30, -8) <br> R: (143, -24) |
+| Self-Portrait | ![](media/out_selfportrait.jpg) <br> G: (70, 25) <br> R: (173, 34) | Three Generations | ![](media/out_threegenerations.jpg) <br> G: (53, 11) <br> R: (118, 10) |
+| Tobolsk | ![](media/out_tobolsk.jpg) <br> G: (3, 3) <br> R: (6, 3) | Train | ![](media/out_train.jpg) <br> G: (41, 0) <br> R: (97, 10) |
