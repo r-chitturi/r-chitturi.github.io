@@ -1,15 +1,16 @@
-# CS 180 Project 1 - Ramya Chitturi
+## Hi there 👋 Welcome to my site for CS 180.
 
-## Project Overview
+<!--
+**r-chitturi/r-chitturi** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
-## Approach
+Here are some ideas to get you started:
 
-### Alignment Metrics
-
-## Bells and Whistles
-
-### Structural Similarity
-
-### Automatic Contrasting
-
-## Final Results
+- 🔭 I’m currently working on ...
+- 🌱 I’m currently learning ...
+- 👯 I’m looking to collaborate on ...
+- 🤔 I’m looking for help with ...
+- 💬 Ask me about ...
+- 📫 How to reach me: ...
+- 😄 Pronouns: ...
+- ⚡ Fun fact: ...
+-->
