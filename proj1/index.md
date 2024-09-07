@@ -25,15 +25,15 @@ The final results of all of the given images are provided at the end.
 ### Structural Similarity
 I used the structural similarity index (SSIM) at the end, mainly to align the emir image. NCC worked much more quickly than SSIM and produced fairly similar results for the rest of the images. I used the `structural_similarity` function from `skimage`'s `metrics` package. I also negated this result so that I could continue to minimize the score. SSIM works better for emir than the other 3 metrics because it operates in the L\*a\*b\* color space rather than RGB, and emir has very little information in the red and green image channels. Below is the result of emir.tif with the four metrics I tried:
 
-| Emir with SAE | Emir with SSD | Emir with NCC | Emir with SSIM
+| Emir with SAE | Emir with SSD | Emir with NCC | Emir with SSIM |
 | :---: |  :----: | :---: | :---: |
 | ![](media/out_emir_sae.jpg) | ![](media/out_emir_ssd.jpg) | ![](media/out_emir_ncc.jpg) | ![](media/emir_SSIM.jpg) |
-| G: (40, 26) <br> R: (88, 37) | G: (37, 20) <br> R: (101, -263) | G: (37, 20) <br> R: (101, -263) | G: (57, 13) <br> R: (121, 25) |
+| G: (26, 40) <br> R: (37, 88) | G: (20, 37) <br> R: (-263, 101) | G: (20, 37) <br> R: (-263, 101) | G: (13, 57) <br> R: (25, 121) |
 
 ### Automatic Contrasting
 I first rescaled the pixel values to be in the 0 to 1 range. Then I applied the main function I used, which was `equalize_adapthist` from `skimage`'s `exposure` package. Then, I rescaled the image back to values from 0 to 255 and converted it to the `uint8` type. Below is a selection of images before and after applying the automatic contrasting:
 
-| Name | Without contrast | With contrast |
+| Name | Without Contrast | With Contrast |
 | :---: | :----: | :----: |
 | Church | ![](media/out_church1.jpg) | ![](media/out_church_contrast1.jpg) |
 | Three Generations | ![](media/out_threegenerations.jpg) | ![](media/out_threegenerations_contrast.jpg) |
@@ -44,10 +44,10 @@ The following images were generated using the NCC metric.
 
 | Name | Image and Offset | Name | Image and Offset |
 | :---: |  :----: | :---: | :---: |
-| Cathedral | ![](media/out_cathedral.jpg) <br> G: (5, 2) <br> R: (12, 3) | Church | ![](media/out_church1.jpg) <br> G: (40, 26) <br> R: (88, 37) |
-| Emir | ![](media/out_emir_ncc.jpg) <br> G: (37, 20) <br> R: (101, -263) | Harvesters | ![](media/out_harvesters.jpg) <br> G: (47, 14) <br> R: (118, 8) |
-| Icon | ![](media/out_icon.jpg) <br> G: (34, 15) <br> R: (79, 21) | Lady | ![](media/out_lady_nocontrast.jpg) <br> G: (33, 8) <br> R: (96, 6) |
-| Melons | ![](media/out_melons.jpg) <br> G: (82, 2) <br> R: (179, 8) | Monastery | ![](media/out_monastery.jpg) <br> G: (-3, 2) <br> R: (3, 2) |
-| Onion Church | ![](media/out_onionchurch1.jpg) <br> G: (40, 26) <br> R: (97, 33) | Sculpture | ![](media/out_sculpture.jpg) <br> G: (30, -8) <br> R: (143, -24) |
-| Self-Portrait | ![](media/out_selfportrait.jpg) <br> G: (70, 25) <br> R: (173, 34) | Three Generations | ![](media/out_threegenerations.jpg) <br> G: (53, 11) <br> R: (118, 10) |
-| Tobolsk | ![](media/out_tobolsk.jpg) <br> G: (3, 3) <br> R: (6, 3) | Train | ![](media/out_train.jpg) <br> G: (41, 0) <br> R: (97, 10) |
+| Cathedral | ![](media/out_cathedral.jpg) <br> G: (2, 5) <br> R: (3, 12) | Church | ![](media/out_church1.jpg) <br> G: (26, 40) <br> R: (37, 88) |
+| Emir | ![](media/out_emir_ncc.jpg) <br> G: (20, 37) <br> R: (-263, 101) | Harvesters | ![](media/out_harvesters.jpg) <br> G: (14, 47) <br> R: (8, 118) |
+| Icon | ![](media/out_icon.jpg) <br> G: (15, 34) <br> R: (21, 79) | Lady | ![](media/out_lady_nocontrast.jpg) <br> G: (8, 33) <br> R: (6, 96) |
+| Melons | ![](media/out_melons.jpg) <br> G: (2, 82) <br> R: (8, 179) | Monastery | ![](media/out_monastery.jpg) <br> G: (2, -3) <br> R: (2, 3) |
+| Onion Church | ![](media/out_onionchurch1.jpg) <br> G: (26, 40) <br> R: (33, 97) | Sculpture | ![](media/out_sculpture.jpg) <br> G: (-8, 30) <br> R: (-24, 142) |
+| Self-Portrait | ![](media/out_selfportrait.jpg) <br> G: (25, 70) <br> R: (34, 173) | Three Generations | ![](media/out_threegenerations.jpg) <br> G: (11, 53) <br> R: (10, 118) |
+| Tobolsk | ![](media/out_tobolsk.jpg) <br> G: (3, 3) <br> R: (3, 6) | Train | ![](media/out_train.jpg) <br> G: (0, 41) <br> R: (10, 97) |
