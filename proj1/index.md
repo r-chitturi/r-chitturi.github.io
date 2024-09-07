@@ -14,8 +14,8 @@ For the bigger images, going through all of the possible displacements is too sl
 I tried 3 main alignment metrics, with the fourth being part of the bells and whistles. 
 
 1. Sum of squared differences/Euclidean distance (SSD): As suggested, I tried using SSD first. 
-2. Sum-absolute error (SAE): This worked better for some of the larger images than SSD. However, the cathedral image was still not aligned when I used this metric.
-3. Normalized cross correlation (NCC): Using NCC helped my cathedral image align a lot better, and it also improved the results of some of my larger images with the pyramid. To implement, I first normalized the values of the red or green images before computing the dot product sum with the blue image. I also negated the final metric so that I could continue to find the minimum score for the optimal displacement.
+2. Sum-absolute error (SAE): This worked better for some of the larger images than SSD, especially emir.tif.
+3. Normalized cross correlation (NCC): Using NCC helped improve the results of some of my larger images with the pyramid. To implement, I first normalized the values of the red or green images before computing the dot product sum with the blue image. I also negated the final metric so that I could continue to find the minimum score for the optimal displacement.
 4. SSIM (see below)
 
 The final results of all of the given images are provided at the end.
@@ -23,7 +23,7 @@ The final results of all of the given images are provided at the end.
 ## Bells and Whistles
 
 ### Structural Similarity
-I used the structural similarity index (SSIM) at the end, mainly to align the emir image. NCC worked much more quickly than SSIM and produced fairly similar results for the rest of the images. I used the `structural_similarity` function from `skimage`'s `metrics` package.
+I used the structural similarity index (SSIM) at the end, mainly to align the emir image. NCC worked much more quickly than SSIM and produced fairly similar results for the rest of the images. I used the `structural_similarity` function from `skimage`'s `metrics` package. I also negated this result so that I could continue to minimize the score. SSIM works better for emir than the other 3 metrics because it operates in the L\*a\*b\* color space rather than RGB, and emir has very little information in the red and green image channels. Below is the result of emir.tif with the four metrics I tried:
 
 | Emir with SAE | Emir with SSD | Emir with NCC | Emir with SSIM
 | :---: |  :----: | :---: | :---: |
@@ -31,7 +31,7 @@ I used the structural similarity index (SSIM) at the end, mainly to align the em
 | G: (40, 26) <br> R: (88, 37) | G: (37, 20) <br> R: (101, -263) | G: (37, 20) <br> R: (101, -263) | G: (57, 13) <br> R: (121, 25) |
 
 ### Automatic Contrasting
-I first rescaled the pixel values to keep them in the 0 to 1 range. Then I applied the main function I used, which was `equalize_adapthist` from `skimage`'s `exposure` package. Then, I rescaled the image back to values from 0 to 255 and converted it to the `uint8` type.
+I first rescaled the pixel values to be in the 0 to 1 range. Then I applied the main function I used, which was `equalize_adapthist` from `skimage`'s `exposure` package. Then, I rescaled the image back to values from 0 to 255 and converted it to the `uint8` type. Below is a selection of images before and after applying the automatic contrasting:
 
 | Name | Without contrast | With contrast |
 | :---: | :----: | :----: |
@@ -42,12 +42,12 @@ I first rescaled the pixel values to keep them in the 0 to 1 range. Then I appli
 
 The following images were generated using the NCC metric.
 
-| Name | Image | Offset | Name | Image | Offset |
-| :---: |  :----: | :---: | :---: |  :----: | :---: |
-| Cathedral | ![](media/out_cathedral.jpg) | G: (5, 2) <br> R: (12, 3) | Church | ![](media/out_church1.jpg) | G: (40, 26) <br> R: (88, 37) |
-| Emir | ![](media/out_emir_ncc.jpg) | G: (37, 20) <br> R: (101, -263) | Harvesters | ![](media/out_harvesters.jpg) | G: (47, 14) <br> R: (118, 8) |
-| Icon | ![](media/out_icon.jpg) | G: (34, 15) <br> R: (79, 21) | Lady | ![](media/out_lady_nocontrast.jpg) | G: (33, 8) <br> R: (96, 6) |
-| Melons | ![](media/out_melons.jpg) | G: (82, 2) <br> R: (179, 8) | Monastery | ![](media/out_monastery.jpg) | G: (-3, 2) <br> R: (3, 2) |
-| Onion Church | ![](media/out_onionchurch1.jpg) | G: (40, 26) <br> R: (97, 33) | Sculpture | ![](media/out_sculpture.jpg) | G: (30, -8) <br> R: (143, -24) |
-| Self-Portrait | ![](media/out_selfportrait.jpg) | G: (70, 25) <br> R: (173, 34) | Three Generations | ![](media/out_threegenerations.jpg) | G: (53, 11) <br> R: (118, 10) |
-| Tobolsk | ![](media/out_tobolsk.jpg) | G: (3, 3) <br> R: (6, 3) | Train | ![](media/out_train.jpg) | G: (41, 0) <br> R: (97, 10) |
+| Name | Image and Offset | Name | Image and Offset |
+| :---: |  :----: | :---: | :---: |
+| Cathedral | ![](media/out_cathedral.jpg) G: (5, 2) <br> R: (12, 3) | Church | ![](media/out_church1.jpg) G: (40, 26) <br> R: (88, 37) |
+| Emir | ![](media/out_emir_ncc.jpg) G: (37, 20) <br> R: (101, -263) | Harvesters | ![](media/out_harvesters.jpg) G: (47, 14) <br> R: (118, 8) |
+| Icon | ![](media/out_icon.jpg) G: (34, 15) <br> R: (79, 21) | Lady | ![](media/out_lady_nocontrast.jpg) G: (33, 8) <br> R: (96, 6) |
+| Melons | ![](media/out_melons.jpg) G: (82, 2) <br> R: (179, 8) | Monastery | ![](media/out_monastery.jpg) G: (-3, 2) <br> R: (3, 2) |
+| Onion Church | ![](media/out_onionchurch1.jpg) G: (40, 26) <br> R: (97, 33) | Sculpture | ![](media/out_sculpture.jpg) G: (30, -8) <br> R: (143, -24) |
+| Self-Portrait | ![](media/out_selfportrait.jpg) G: (70, 25) <br> R: (173, 34) | Three Generations | ![](media/out_threegenerations.jpg) G: (53, 11) <br> R: (118, 10) |
+| Tobolsk | ![](media/out_tobolsk.jpg) G: (3, 3) <br> R: (6, 3) | Train | ![](media/out_train.jpg) G: (41, 0) <br> R: (97, 10) |
