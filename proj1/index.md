@@ -31,12 +31,21 @@ I used the structural similarity index (SSIM) at the end, mainly to align the em
 | G: (26, 40) <br> R: (37, 88) | G: (20, 37) <br> R: (-263, 101) | G: (20, 37) <br> R: (-263, 101) | G: (13, 57) <br> R: (25, 121) |
 
 ### Automatic Contrasting
-I first rescaled the pixel values to be in the 0 to 1 range. Then I applied the main function I used, which was `equalize_adapthist` from `skimage`'s `exposure` package. Then, I rescaled the image back to values from 0 to 255 and converted it to the `uint8` type. Below is a selection of images before and after applying the automatic contrasting:
+I first rescaled the pixel values to be in the 0 to 1 range. Then I applied the main function I used, which was `equalize_adapthist` from `skimage`'s `exposure` package. Then, I rescaled the image back to values from 0 to 255 and converted it to the `uint8` type. 
 
-| Name | Without Contrast | With Contrast |
-| :---: | :----: | :----: |
-| Church | ![](media/out_church1.jpg) | ![](media/out_church_contrast1.jpg) |
-| Three Generations | ![](media/out_threegenerations.jpg) | ![](media/out_threegenerations_contrast.jpg) |
+### Automatic White Balancing
+
+I used the algorithm from a paper by Limare et al. (https://www.ipol.im/pub/art/2011/llmps-scb/). I saturated the upper 5% and lower 5% of pixels and then normalized the pixels from 0 to 1 using a transform. In the future, I would experiment more with the illuminant saturation percentages.
+
+Below is a selection of images before and after applying the automatic white balancing, automatic contrasting, white balancing followed by contrasting, and contrasting followed by white balancing. White balancing before contrasting seemed to work better than the reverse order.
+
+| | Church | Onion Church |
+| :----: | :----: | :----: |
+| Only Aligned | ![](media/out_church1.jpg) | ![](media/out_onionchurch1.jpg) |
+| With Only White Balance | ![](media/out_church_whitebalance.jpg) | ![](media/out_onionchurch_whitebalance.jpg) |
+| With Only Contrast | ![](media/out_church_contrast1.jpg) | ![](media/out_onionchurch_contrast.jpg) |
+| With White Balance then Contrast | ![](media/out_church_whitebalance_then_contrast.jpg) | ![](media/out_onionchurch_whitebalance_then_contrast.jpg) |
+| With Contrast then White Balance | ![](media/out_church_contrast_then_whitebalance.jpg) | ![](media/out_onionchurch_contrast_then_whitebalance.jpg) |
 
 ## Final Results
 
@@ -44,7 +53,7 @@ The following images were generated using the NCC metric.
 
 | Name | Image and Offset | Name | Image and Offset |
 | :---: |  :----: | :---: | :---: |
-| Cathedral | ![](media/out_cathedral.jpg) <br> G: (2, 5) <br> R: (3, 12) | Church | ![](media/out_church1.jpg) <br> G: (26, 40) <br> R: (37, 88) |
+| Cathedral | ![](media/out_cathedral.jpg) <br> G: (2, 5) <br> R: (3, 12) | Church | ![](media/out_church1.jpg) <br> G: (0, 6) <br> R: (-9, 47) |
 | Emir | ![](media/out_emir_ncc.jpg) <br> G: (20, 37) <br> R: (-263, 101) | Harvesters | ![](media/out_harvesters.jpg) <br> G: (14, 47) <br> R: (8, 118) |
 | Icon | ![](media/out_icon.jpg) <br> G: (15, 34) <br> R: (21, 79) | Lady | ![](media/out_lady_nocontrast.jpg) <br> G: (8, 33) <br> R: (6, 96) |
 | Melons | ![](media/out_melons.jpg) <br> G: (2, 82) <br> R: (8, 179) | Monastery | ![](media/out_monastery.jpg) <br> G: (2, -3) <br> R: (2, 3) |
