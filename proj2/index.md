@@ -48,39 +48,36 @@ To sharpen an image, we convolve the input image with a gaussian kernel. This ac
 
 Next, we blur the image of this orange cat using `kernel_size = 10` and `sigma = kernel_size / 6`. We sharpen the image normally with `alpha = 1`, and then we sharpen the image after blurring with `alpha = 2`.
 
-| Original Image | Sharpened Image | Details |
-| :----: | :----: | :----: |
-| ![](media/out_2.1/orangecat.jpg) | ![](media/out_2.1/sharpened_orangecat.jpg) | [](media/out_2.1/sharpened_orangecat_details.jpg) |
-
-| Blurred Image | Blurred then Sharpened |
-| :----: | :----: |
-| ![](media/out_2.1/orangecat_blur.jpg) | ![](media/out_2.1/orangecat_blur_then_sharpened.jpg) |
+| Original Image | Sharpened Image | Blurred Image | Blurred then Sharpened |
+| :----: | :----: | :----: | :----: |
+| ![](media/out_2.1/orangecat.jpg) | ![](media/out_2.1/sharpened_orangecat.jpg) | ![](media/out_2.1/orangecat_blur.jpg) | ![](media/out_2.1/orangecat_blur_then_sharpened.jpg) |
 
 ### Part 2.2: Hybrid Images
-We take in two input images, `im_high` and `im_low` and align them using the provided function. We use a gaussian blur on the high frequency image using `kernel_size = 6 * sigma_high` to generate `blurred_im_high`. Then, we get the high frequency image using `high = im_high - blurred_im_high`. After that, we blur the low frequency image using kernel_size = 6 * sigma_low` to get `blurred_im_low`. We average the pixels of `high` and `blurred_im_low` to get our hybrid image!
+We take in two input images, `im_high` and `im_low`, and align them using the provided function. We use a gaussian blur on the high frequency image using `kernel_size = 6 * sigma_high` to generate `blurred_im_high`. Then, we get the high frequency image using `high = im_high - blurred_im_high`. After that, we blur the low frequency image using `kernel_size = 6 * sigma_low` to get `blurred_im_low`. We average the pixels of `high` and `blurred_im_low` to get our hybrid image!
 
 | Low Frequency Image | High Frequency Image | Hybrid Image |
 | :----: | :----: | :----: |
-| ![](media/out_2.2/DerekPicture.jpg) Derek | ![](media/out_2.2/nutmeg.jpg) Nutmeg | ![](media/out_2.2/hybrid_derek_nutmeg.jpg) sigma_low = 8 <br> sigma_high = 11 |
-| ![](media/out_2.2/basketball.jpg) Basketball | ![](media/out_2.2/orangecat.jpg) Orange Cat | ![](media/out_2.2/hybrid_cat_basketball.jpg) sigma_low = 4 <br> sigma_high = 10 |
-| ![](media/out_2.2/tragedy.png) Tragedy | ![](media/out_2.2/comedy.png) Comedy | ![](media/out_2.2/hybrid_comedy_tragedy.jpg) sigma_low = 3 <br> sigma_high = 6 |
+| ![](media/out_2.2/DerekPicture.jpg) <br> Derek | ![](media/out_2.2/nutmeg.jpg) <br> Nutmeg | ![](media/out_2.2/hybrid_derek_nutmeg.jpg) <br> sigma_low = 8 <br> sigma_high = 11 |
+| ![](media/out_2.2/basketball.jpg) <br> Basketball | ![](media/out_2.2/orangecat.jpg) <br> Orange Cat | ![](media/out_2.2/hybrid_cat_basketball.jpg) <br> sigma_low = 4 <br> sigma_high = 10 |
+| ![](media/out_2.2/tragedy.png) <br> Tragedy | ![](media/out_2.2/comedy.png) <br> Comedy | ![](media/out_2.2/hybrid_comedy_tragedy.jpg) <br> sigma_low = 3 <br> sigma_high = 6 |
 
 The following hybrid image failed, likely because of the paper plane's thick black lines compared to the airplane.
+
 | Low Frequency Image | High Frequency Image | Hybrid Image |
 | :----: | :----: | :----: |
-| ![](media/out_2.2/paperplane.jpg) Paper Plane | ![](media/out_2.2/plane.jpg) Airplane | ![](media/out_2.2/hybrid_plane_paperplane_bad.jpg) sigma_low = 4 <br> sigma_high = 10 |
+| ![](media/out_2.2/paperplane.jpg) <br> Paper Plane | ![](media/out_2.2/plane.jpg) <br> Airplane | ![](media/out_2.2/hybrid_plane_paperplane_bad.jpg) <br> sigma_low = 4 <br> sigma_high = 10 |
 
 #### Fourier Analysis
 I liked the way that comedy and tragedy turned out, so I performed Fourier analysis below.
 
 |  |  |
 | :----: | :----: |
-| ![](media/out_2.2/hybrid_fft_low.jpg) Paper Plane FFT | ![](media/out_2.2/hybrid_fft_high.jpg) Airplane FFT |
-| ![](media/out_2.2/hybrid_fft_hybridlow.jpg) Low Frequency FFT | ![](media/out_2.2/hybrid_fft_hybridhigh.jpg) High Frequency FFT |
+| ![](media/out_2.2/hybrid_fft_low.jpg) <br> Paper Plane FFT | ![](media/out_2.2/hybrid_fft_high.jpg) <br> Airplane FFT |
+| ![](media/out_2.2/hybrid_fft_hybridlow.jpg) <br> Low Frequency FFT | ![](media/out_2.2/hybrid_fft_hybridhigh.jpg) <br> High Frequency FFT |
 
 | |
 | :----: |
-| ![](media/out_2.2/hybrid_fft_hybrid.jpg) Hybrid Image FFT |
+| ![](media/out_2.2/hybrid_fft_hybrid.jpg) <br> Hybrid Image FFT |
 
 #### Part 2.2 - Adding Color (Bells and Whistles)
 I experimented with using color on Derek and Nutmeg.
@@ -99,10 +96,10 @@ Here are levels 0 through 4 of the input images' Gaussian and Laplacian stacks. 
 
 | |
 | :----: |
-| ![](media/out_2.4/2.4_apple_gstack.jpg) Apple Gaussian Stack|
-| ![](media/out_2.4/2.4_apple_lstack.jpg) Apple Laplacian Stack|
-| ![](media/out_2.4/2.4_orange_gstack.jpg) Orange Gaussian Stack|
-| ![](media/out_2.4/2.4_orange_lstack.jpg) Orange Laplacian Stack|
+| ![](media/out_2.4/2.4_apple_gstack.jpg) <br> Apple Gaussian Stack|
+| ![](media/out_2.4/2.4_apple_lstack.jpg) <br> Apple Laplacian Stack|
+| ![](media/out_2.4/2.4_orange_gstack.jpg) <br> Orange Gaussian Stack|
+| ![](media/out_2.4/2.4_orange_lstack.jpg) <br> Orange Laplacian Stack|
 
 ### Part 2.4: Multiresolution Blending
 
@@ -121,12 +118,13 @@ I created Figure 3.42 from the textbook on the oraple.
 
 | |
 | :----: |
-| ![](media/out_2.4/2.4_oraple_level0.jpg) Level 0 |
-| ![](media/out_2.4/2.4_oraple_level2.jpg) Level 2 |
-| ![](media/out_2.4/2.4_oraple_level4.jpg) Level 4 |
-| ![](media/out_2.4/2.4_oraple_levelcollapsed.jpg) Collapsed |
+| ![](media/out_2.4/2.4_oraple_level0.jpg) <br> Level 0 |
+| ![](media/out_2.4/2.4_oraple_level2.jpg) <br> Level 2 |
+| ![](media/out_2.4/2.4_oraple_level4.jpg) <br> Level 4 |
+| ![](media/out_2.4/2.4_oraple_levelcollapsed.jpg) <br> Collapsed |
 
 Here is the final result again:
+
 | Image 1 | Image 2 | Blended Image |
 | :----: | :----: | :----: |
 | ![](media/out_2.4/apple.jpeg) | ![](media/out_2.4/orange.jpeg) | ![](media/out_2.4/2.4_oraple1.jpg) |
