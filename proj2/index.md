@@ -61,6 +61,7 @@ We take in two input images, `im_high` and `im_low`, and align them using the pr
 | ![](media/out_2.2/basketball.jpg) <br> Basketball | ![](media/out_2.2/orangecat.jpg) <br> Orange Cat | ![](media/out_2.2/hybrid_cat_basketball.jpg) <br> sigma_low = 4 <br> sigma_high = 10 |
 | ![](media/out_2.2/tragedy.png) <br> Tragedy | ![](media/out_2.2/comedy.png) <br> Comedy | ![](media/out_2.2/hybrid_comedy_tragedy.jpg) <br> sigma_low = 3 <br> sigma_high = 6 |
 
+
 The following hybrid image failed, likely because of the paper plane's thick black lines compared to the airplane.
 
 | Low Frequency Image | High Frequency Image | Hybrid Image |
@@ -72,7 +73,7 @@ I liked the way that comedy and tragedy turned out, so I performed Fourier analy
 
 |  |  |
 | :----: | :----: |
-| ![](media/out_2.2/hybrid_fft_low.jpg) <br> Paper Plane FFT | ![](media/out_2.2/hybrid_fft_high.jpg) <br> Airplane FFT |
+| ![](media/out_2.2/hybrid_fft_low.jpg) <br> Tragedy FFT | ![](media/out_2.2/hybrid_fft_high.jpg) <br> Comedy FFT |
 | ![](media/out_2.2/hybrid_fft_hybridlow.jpg) <br> Low Frequency FFT | ![](media/out_2.2/hybrid_fft_hybridhigh.jpg) <br> High Frequency FFT |
 
 | |
@@ -122,6 +123,7 @@ I created Figure 3.42 from the textbook on the oraple.
 | ![](media/out_2.4/2.4_oraple_level2.jpg) <br> Level 2 |
 | ![](media/out_2.4/2.4_oraple_level4.jpg) <br> Level 4 |
 | ![](media/out_2.4/2.4_oraple_levelcollapsed.jpg) <br> Collapsed |
+
 
 Here is the final result again:
 
