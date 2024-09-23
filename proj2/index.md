@@ -130,3 +130,7 @@ Here is the final result again:
 | Image 1 | Image 2 | Blended Image |
 | :----: | :----: | :----: |
 | ![](media/out_2.4/apple.jpeg) | ![](media/out_2.4/orange.jpeg) | ![](media/out_2.4/2.4_oraple1.jpg) |
+
+## Conclusion
+
+The most important thing I learned was how blended both the images and the mask using the Gaussian and Laplacian stacks helped the final image appear more realistic. As I refined my parameters, the output looked more smoothly blended and interesting to the viewer.
