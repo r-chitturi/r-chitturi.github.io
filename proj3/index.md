@@ -21,8 +21,10 @@ Then, I used `skimage.draw.polygon` to find all the points that were within the 
 
 ## Part 3. The Morph Sequence
 
-I used 100 frames in my morph sequence. The warp amount and dissolve amount is determined by `i / 100`, where `i` is the current frame number. 
+As per the instructions, I computed a morph sequence with 45 frames (with 0 fully being image 1 and 45 fully being image 2). Each frame's duration is around 1/30th of a second. The warp amount and dissolve amount is determined by `i / x`, where `i` is the current frame number and `x` is the number of frames. 
+![](media/q3_frames45.gif)
 
+I also computed another morph sequence where I used 100 frames, with each having a duration of 1/20th of a second. 
 ![](media/q2_morph_ramya_kavya.gif)
 
 ## Part 4. The "Mean face" of a population
