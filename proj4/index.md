@@ -1,6 +1,14 @@
 <script type="text/javascript" async 
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js">
 </script>
+<script type="text/javascript" async>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+  };
+</script>
 
 # Stitching Photo Mosaics - Part A
 
@@ -24,7 +32,7 @@ Here are the images that I used in this project for the mosaics.
 
 First, I defined my correspondence points between pairs of images. For example, here are my correspondences for the Souvenir images.
 
-|  |  |
+| Souvenir Coffee 1 Correspondences | Souvenir Coffee 2 Correspondences |
 | :----: | :----: |
 | <img src="media/souvenir1_correspondences.jpg" width="300"/> | <img src="media/souvenir2_correspondences.jpg" width="300"/> |
 
@@ -123,16 +131,16 @@ Here are warped images and blended mosaics (below all warped images) for my 3 ex
 
 | Warped Image 1 | Warped Image 2 |
 | :----: | :----: |
-| <img src="media/breezeway1_bigger_warp1.jpg" width="300"/> | <img src="media/breezeway2_bigger_warp2.jpg" width="300"/> |
-| <img src="media/kitchen12_noblend_bigger_warp1.jpg" width="300"/> | <img src="media/kitchen12_noblend_bigger_warp2.jpg" width="300"/> |
-| <img src="media/souvenir1_warped.jpg" width="300"/> | <img src="media/souvenir2_warped.jpg" width="300"/> |
+| <img src="media/breezeway1_bigger_warp1.jpg" width="400"/> | <img src="media/breezeway2_bigger_warp2.jpg" width="400"/> |
+| <img src="media/kitchen12_noblend_bigger_warp1.jpg" width="400"/> | <img src="media/kitchen12_noblend_bigger_warp2.jpg" width="400"/> |
+| <img src="media/souvenir1_warped.jpg" width="400"/> | <img src="media/souvenir2_warped.jpg" width="400"/> |
 
 <br> <img src="media/breezeway12_bigger_twoband.jpg" width="600" style="display: block; margin: 0 auto;"/>
 <br> <img src="media/kitchen12_twoband_bigger1.jpg" width="600" style="display: block; margin: 0 auto;"/>
 <br> <img src="media/souvenir12_twoband.jpg" width="600" style="display: block; margin: 0 auto;"/>
 
 Here is an example mask image from a warped kitchen image.
-<br>
+
 | Warped Image | Distance Transform Mask |
 | :----: | :----: |
 | <img src="media/kitchen12_noblend_bigger_warp2.jpg" width="300"/> | <img src="media/kitchen2_mask_correct.jpg" width="300"/> |
