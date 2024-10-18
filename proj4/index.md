@@ -1,33 +1,34 @@
+<script type="text/javascript" async 
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js">
+</script>
+
 # Stitching Photo Mosaics - Part A
 
 ## Taking Images
 
-Here are the images that I used in this project for the mosaics:
+Here are the images that I used in this project for the mosaics.
 
-Soda Breezeway:
-|  |  |
+| Soda Breezeway 1 | Soda Breezeway 2 |
 | :----: | :----: |
 | <img src="media/breezeway1.jpg" width="300"/> | <img src="media/breezeway2.jpg" width="300"/> |
 
-View from Souvenir Coffee:
-|  |  |
+| Souvenir Coffee 1 | Souvenir Coffee 2 |
 | :----: | :----: |
 | <img src="media/im2_souvenir.jpg" width="300"/> | <img src="media/im1_souvenir.jpg" width="300"/> |
 
-My Kitchen:
-|  |  |
+| My Kitchen 1 | My Kitchen 2 |
 | :----: | :----: |
 | <img src="media/kitchen1.jpg" width="300"/> | <img src="media/kitchen2.jpg" width="300"/> |
 
 ## Recover Homographies
 
-First, I defined my correspondence points between pairs of images. For example, here are my correspondences for the Souvenir images:
+First, I defined my correspondence points between pairs of images. For example, here are my correspondences for the Souvenir images.
 
 |  |  |
 | :----: | :----: |
 | <img src="media/souvenir1_correspondences.jpg" width="300"/> | <img src="media/souvenir2_correspondences.jpg" width="300"/> |
 
-Let the points in the source image (the first image) be $(x_{i}, y_{i})$ and the corresponding points in the target image be $(x'_{i}, y'_{i})$. We want the 3x3 transformation matrix such that:
+Let the points in the source image (the first image) be $(x_{i}, y_{i})$ and the corresponding points in the target image be $(x'_{i}, y'_{i})$. We want the following 3x3 transformation matrix.
 $$
 \begin{bmatrix}
 a & b & c \\
@@ -118,31 +119,35 @@ I used two-band blending with a distance transform mask to blend my images toget
 3. The high frequency image was obtained by subtracting the original image by the low frequency image. I combined the high frequencies by choosing the corresponding pixel where the mask is greater.
 4. I added the two blends together for the final blended mosaic.
 
-Here are blended mosaics for my 3 examples. The original images for the mosaics can be found at the top of the website.
+Here are warped images and blended mosaics (below all warped images) for my 3 examples. The original images for the mosaics can be found at the top of the website.
 
-| Warped Image 1 | Warped Image 2 | Blended Mosaic |
-| :----: | :----: | :----: |
-| <img src="media/breezeway1_bigger_warp1.jpg" width="300"/> | <img src="media/breezeway2_bigger_warp2.jpg" width="300"/> | <img src="media/breezeway12_bigger_twoband.jpg" width="600"/> |
-| <img src="media/kitchen12_noblend_bigger_warp1.jpg" width="300"/> | <img src="media/kitchen12_noblend_bigger_warp2.jpg" width="300"/> | <img src="media/kitchen12_twoband_bigger1.jpg" width="600"/> |
-| <img src="media/souvenir1_warped.jpg" width="300"/> | <img src="media/souvenir2_warped.jpg" width="300"/> | <img src="media/souvenir12_twoband.jpg" width="600"/> |
+| Warped Image 1 | Warped Image 2 |
+| :----: | :----: |
+| <img src="media/breezeway1_bigger_warp1.jpg" width="300"/> | <img src="media/breezeway2_bigger_warp2.jpg" width="300"/> |
+| <img src="media/kitchen12_noblend_bigger_warp1.jpg" width="300"/> | <img src="media/kitchen12_noblend_bigger_warp2.jpg" width="300"/> |
+| <img src="media/souvenir1_warped.jpg" width="300"/> | <img src="media/souvenir2_warped.jpg" width="300"/> |
 
-Here is an example mask image from a warped kitchen image:
+<br> <img src="media/breezeway12_bigger_twoband.jpg" width="600" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/kitchen12_twoband_bigger1.jpg" width="600" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/souvenir12_twoband.jpg" width="600" style="display: block; margin: 0 auto;"/>
+
+Here is an example mask image from a warped kitchen image.
+<br>
 | Warped Image | Distance Transform Mask |
 | :----: | :----: |
 | <img src="media/kitchen12_noblend_bigger_warp2.jpg" width="300"/> | <img src="media/kitchen2_mask_correct.jpg" width="300"/> |
 
 ### Laplacian Blending
 
-I also used the Gaussian and Laplacian stacks from Project 2 in order to blend the two images in my mosaics together. I used 5 levels with a kernel size of 12 and sigma of 2. The exception was for the mask's Gaussian stack, where I used a kernel size of 60 for extra blending. Otherwise, there was a harsher line where my mask was. Here is an example that compares the kitchen mosaic using two-band blending and Laplacian blending:
+I also used the Gaussian and Laplacian stacks from Project 2 in order to blend the two images in my mosaics together. I used 5 levels with a kernel size of 12 and sigma of 2. The exception was for the mask's Gaussian stack, where I used a kernel size of 60 for extra blending. Otherwise, there was a harsher line where my mask was. Here is an example that compares the kitchen mosaic using two-band blending and Laplacian blending.
 
 | Using Laplacian Stacks | Using Two-Band Blending |
 | :----: | :----: |
 | <img src="media/kitchen12_laplacianblend.jpg" width="300"/> | <img src="media/kitchen12_twoband_bigger1.jpg" width="300"/> |
 
 Here is the mask I used for Laplacian blending. I created binary masks for both images where the pixel in the image was greater than 0. Then, I used `distance_transform_edt` on both masks. I combined the two masks by seeing where the mask after the distance transform for `im1` was greater than the transform mask for `im2`.
-|  |
-| :----: |
-| <img src="media/kitchen12_laplacianmask.jpg" width="300"/> |
+
+<br> <img src="media/kitchen12_laplacianmask.jpg" width="300"/>
 
 ## Reflection - Part A
 
