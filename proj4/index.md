@@ -101,13 +101,7 @@ y' \\
 $$ 
 
 ## Warp the Images
-Here was my method to warp/project `im1` onto `im2`.
-1. The calculations above were to get the estimated homography matrix H. We calculate H based on `im1_points` to `im2_points`.
-2. We compute the bounding box of the final image size by taking the 4 corners of `im1`. Then we homogenize the coordinates into a 4x3 matrix. We then warp this bounding box by multiplying the matrix with `H.T`.
-3. Using `skimage.draw.polygon` like in Project 3, we get the points that are within the bounding box. This polygon is where the final image will be placed.
-4. We then interpolate the pixel values in the warped image.
-
-This procedure allows us to warp the source image's points and align them with the correspondence points in the target image.
+Here was my method to warp/project `im1` onto `im2`. This procedure allows us to warp the source image's points and align them with the correspondence points in the target image. The calculations above were to get the estimated homography matrix H. I calculated H based on `im1_points` to `im2_points`. I computed the bounding box of the final image size by taking the 4 corners of `im1`. I then homogenized the coordinates into a 4x3 matrix so we can warp the bounding box by multiplying it with the transpose of `H`. By utilizing `skimage.draw.polygon`, similar to the method used in Project 3, I got the points that are within the bounding box. This polygon is where the final image will be placed. I then interpolated the pixel values in the warped image.
 
 ## Image Rectification
 
@@ -125,11 +119,7 @@ To generate the mosaic, I defined the corners of both input images and warped th
 
 ### Two-Band Blending
 
-I used two-band blending with a distance transform mask to blend my images together.
-1. I computed the distance transform mask for both my images using `scipy.ndimage.distance_transform_edt` to find the Euclidean distance to the nearest edge. I normalized each mask.
-2. Similar to Project 2, I found the low and high frequencies of each image. To get the low frequency image, I used a blurring Gaussian filter with kernel size 7 and sigma 2. I combined the two low frequencies by doing `(lowPass1*mask1 + lowPass2*mask2) / (mask1 + mask2 + 1e-8)` wherever either mask was nonzero. Adding `1e-8` prevented division by 0.
-3. The high frequency image was obtained by subtracting the original image by the low frequency image. I combined the high frequencies by choosing the corresponding pixel where the mask is greater.
-4. I added the two blends together for the final blended mosaic.
+I used two-band blending with a distance transform mask to blend my images together. I generated the distance transform mask for both my images using `scipy.ndimage.distance_transform_edt` to find the Euclidean distance to the nearest edge, which was subsequently normalized. Similar to the approach taken in Project 2, I found the low and high frequencies of each image. To get the low frequency image, I used a blurring Gaussian filter with `kernel_size=7` and `sigma=2`. I combined the two low frequencies by doing `(lowPass1*mask1 + lowPass2*mask2) / (mask1 + mask2 + 1e-8)` wherever either mask was nonzero. Adding `1e-8` prevented division by 0 but still ensured a very small pixel value. The high frequency image was obtained by subtracting the original image by the low frequency image. To merge the high frequency images, I selected the corresponding pixels based on the greater value in the mask. For the final blended mosaic, I added the two blends together.
 
 Here are warped images and blended mosaics (below all warped images) for my 3 examples. The original images for the mosaics can be found at the top of the website.
 
@@ -151,13 +141,13 @@ Here is an example mask image from a warped kitchen image.
 
 ### Laplacian Blending
 
-I also used the Gaussian and Laplacian stacks from Project 2 in order to blend the two images in my mosaics together. I used 5 levels with a kernel size of 12 and sigma of 2. The exception was for the mask's Gaussian stack, where I used a kernel size of 60 for extra blending. Otherwise, there was a harsher line where my mask was. Here is an example that compares the kitchen mosaic using two-band blending and Laplacian blending.
+I also used the Gaussian and Laplacian stacks from Project 2 in order to blend the two images in my mosaics together. I used 5 levels with `kernel_size=12` and `sigma=2`. The exception was for the mask's Gaussian stack, where I used a `kernel size=60` for extra blending. Otherwise, there was a harsher line where my mask was. Here is an example that compares the kitchen mosaic using two-band blending and Laplacian blending.
 
 | Using Laplacian Stacks | Using Two-Band Blending |
 | :----: | :----: |
 | <img src="media/kitchen12_laplacianblend.jpg" width="300"/> | <img src="media/kitchen12_twoband_bigger1.jpg" width="300"/> |
 
-Here is the mask I used for Laplacian blending. I created binary masks for both images where the pixel in the image was greater than 0. Then, I used `distance_transform_edt` on both masks. I combined the two masks by seeing where the mask after the distance transform for `im1` was greater than the transform mask for `im2`.
+Here is the mask I used for Laplacian blending. I created binary masks for both images where the pixel in the image was greater than 0. Then, I used `distance_transform_edt` on both masks. I combined the two masks by seeing where the mask after the distance transform for `im1` was greater than the transform mask for `im2`. I preferred my two-band blending output, so I chose to use that for all of my final mosaics.
 
 <br> <img src="media/kitchen12_laplacianmask.jpg" width="300"/>
 
