@@ -37,6 +37,8 @@ First, I defined my correspondence points between pairs of images. For example, 
 | <img src="media/souvenir1_correspondences.jpg" width="300"/> | <img src="media/souvenir2_correspondences.jpg" width="300"/> |
 
 Let the points in the source image (the first image) be $(x_{i}, y_{i})$ and the corresponding points in the target image be $(x'_{i}, y'_{i})$. We want the following 3x3 transformation matrix.
+<br>
+
 $$
 \begin{bmatrix}
 a & b & c \\
@@ -74,6 +76,8 @@ dx + ey + f - gxy' - hyy' = y' \\
 $$
 
 We can finally solve for $x'$ and $y'$ using least squares. Since we have an overconstrained system, we can just stack all the corresponding points in the matrix and constant vector. We have the following equation:
+<br>
+
 $$
 \begin{bmatrix}
 x & y & 1 & 0 & 0 & 0 & -xx' & -yx' \\ 
