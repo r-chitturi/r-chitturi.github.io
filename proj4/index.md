@@ -184,10 +184,10 @@ For each corner found by ANMS, we find a 40x40 pixel region around the point fou
 
 Here are some example 8x8 feature descriptors found:
 
-<img src="media/partb/patch3_extract_kitchen1.jpg" width="200"/>
-<img src="media/partb/patch11_extract_kitchen1.jpg" width="200"/>
-<br> <img src="media/partb/patch16_extract_kitchen1.jpg" width="200"/>
-<img src="media/partb/patch18_extract_kitchen1.jpg" width="200"/>
+<img src="media/partb/patch3_extract_kitchen1.jpg" width="300"/>
+<img src="media/partb/patch11_extract_kitchen1.jpg" width="300"/>
+<img src="media/partb/patch16_extract_kitchen1.jpg" width="300"/>
+<img src="media/partb/patch18_extract_kitchen1.jpg" width="300"/>
 
 ## Feature Matching
 
@@ -195,13 +195,13 @@ We have a set of features for both images from the previous part. Now, we need t
 
 | Threshold = 0.5 | Threshold = 0.8 |
 | :----: | :----: |
-| <img src="media/partb/corrpoints_matched_thresh05_kitchen1.jpg" width="300"/> | <img src="media/partb/corrpoints_matched_thresh08_kitchen1.jpg" width="300"/> |
+| <img src="media/partb/corrpoints_matched_thresh05_kitchen12.jpg" width="300"/> | <img src="media/partb/corrpoints_matched_thresh08_kitchen12.jpg" width="300"/> |
 
 ## RANSAC
 
 RANSAC is used to increase least-squares' robustness when computing the homography. The input points are the ANMS-determined points, where the matches are then filtered from Lowe's method before. We randomly sample 4 pairs of points and compute the homographies. We track the inliers, which are points that land within a given threshold. At each iteration of the algorithm, we see if there are more inliers than the previous best homography computed. If so, we update our best points accoridngly. This helps us minimize outliers. I used a threshold of 0.8 and 2500 iterations for my RANSAC algorithm. Below are the points matched by RANSAC for the first and second kitchen images.
 
-<img src="media/partb/ransac_matched_kitchen12.jpg" width="400"/>
+<img src="media/partb/ransac_matched_kitchen12.jpg" width="600"/>
 
 ## Results
 
@@ -219,9 +219,9 @@ Here are the results of using RANSAC and automatic feature matching on the image
 
 | Manual Correspondences | Automatic Correspondences |
 | :----: | :----: |
-| <img src="media/kitchen12_twoband_bigger1.jpg" width="500"/> | <img src="media/partb/ransac_blended_kitchen12.jpg" width="500"/> |
-| <img src="media/souvenir12_twoband.jpg" width="500"/> | <img src="media/partb/ransac_blended_souvenir12_larger.jpg" width="500"/> |
-| <img src="media/breezeway12_bigger_twoband.jpg" width="500"/> | <img src="media/partb/ransac_blended_breezeway12.jpg" width="500"/> |
+| <img src="media/kitchen12_twoband_bigger1.jpg" width="600"/> | <img src="media/partb/ransac_blended_kitchen12.jpg" width="600"/> |
+| <img src="media/souvenir12_twoband.jpg" width="600"/> | <img src="media/partb/ransac_blended_souvenir12_larger.jpg" width="600"/> |
+| <img src="media/breezeway12_bigger_twoband.jpg" width="600"/> | <img src="media/partb/ransac_blended_breezeway12.jpg" width="600"/> |
 
 ## Reflection - Part B
 
