@@ -184,24 +184,33 @@ For each corner found by ANMS, we find a 40x40 pixel region around the point fou
 
 Here are some example 8x8 feature descriptors found:
 
-<img src="media/partb/patch3_extract_kitchen1.jpg" width="300"/>
-<img src="media/partb/patch11_extract_kitchen1.jpg" width="300"/>
-<img src="media/partb/patch16_extract_kitchen1.jpg" width="300"/>
-<img src="media/partb/patch18_extract_kitchen1.jpg" width="300"/>
+<img src="media/partb/patch3_extract_kitchen1.jpg" width="250"/>
+<img src="media/partb/patch11_extract_kitchen1.jpg" width="250"/>
+<img src="media/partb/patch16_extract_kitchen1.jpg" width="250"/>
+<img src="media/partb/patch18_extract_kitchen1.jpg" width="250"/>
 
 ## Feature Matching
 
 We have a set of features for both images from the previous part. Now, we need to match the features together. First, we calculate the pairwise differences between each (flattened) feature descriptor. We find the sum of squared differences (SSD) over the last dimension. We find the nearest-neighbor distances by sorting the SSD found before. We use Lowe's technique in order to minimize outliers. I used a Lowe's threshold of 0.5, which means that the nearest neighbor should be a significantly better match than the second-nearest neighbor. The matched points are shown below.
 
+Here are some of the matches between feature descriptors.
+
+<img src="media/partb/patch0_matched_kitchen.jpg" width="400" style="display: block; margin: 0 auto;"/>
+<img src="media/partb/patch7_matched_kitchen.jpg" width="400" style="display: block; margin: 0 auto;"/>
+<img src="media/partb/patch8_matched_kitchen.jpg" width="400" style="display: block; margin: 0 auto;"/>
+<img src="media/partb/patch16_matched_kitchen.jpg" width="400" style="display: block; margin: 0 auto;"/>
+
+Here are the following matching correspondences, which I got by indexing into the original detected corners.
+
 | Threshold = 0.5 | Threshold = 0.8 |
 | :----: | :----: |
-| <img src="media/partb/corrpoints_matched_thresh05_kitchen12.jpg" width="300"/> | <img src="media/partb/corrpoints_matched_thresh08_kitchen12.jpg" width="300"/> |
+| <img src="media/partb/corrpoints_matched_thresh05_kitchen12.jpg" width="500"/> | <img src="media/partb/corrpoints_matched_thresh08_kitchen12.jpg" width="500"/> |
 
 ## RANSAC
 
 RANSAC is used to increase least-squares' robustness when computing the homography. The input points are the ANMS-determined points, where the matches are then filtered from Lowe's method before. We randomly sample 4 pairs of points and compute the homographies. We track the inliers, which are points that land within a given threshold. At each iteration of the algorithm, we see if there are more inliers than the previous best homography computed. If so, we update our best points accoridngly. This helps us minimize outliers. I used a threshold of 0.8 and 2500 iterations for my RANSAC algorithm. Below are the points matched by RANSAC for the first and second kitchen images.
 
-<img src="media/partb/ransac_matched_kitchen12.jpg" width="600"/>
+<img src="media/partb/ransac_matched_kitchen12.jpg" width="600" style="display: block; margin: 0 auto;"/>
 
 ## Results
 
