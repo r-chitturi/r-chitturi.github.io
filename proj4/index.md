@@ -117,17 +117,23 @@ Using the warping function from before, we can rectify images that contain a rec
 
 To generate the mosaic, I defined the corners of both input images and warped the corners of `im1` using H. I then computed the bounding box for both images, which is where the final warped image will lay. I then calculated my new image dimensions based on the difference between the maximum and minimum x and y coordinates. I created a translation matrix to shift an image into a positive coordinate space. I then warped both images to the new dimensions and using the translation matrix (where `im1` was warped by `translation_matrix @ H`). Naively, I took the maximum pixel value at a point to combine the two images into the final mosaic.
 
-### Two-Band Blending
-
-I used two-band blending with a distance transform mask to blend my images together. I generated the distance transform mask for both my images using `scipy.ndimage.distance_transform_edt` to find the Euclidean distance to the nearest edge, which was subsequently normalized. Similar to the approach taken in Project 2, I found the low and high frequencies of each image. To get the low frequency image, I used a blurring Gaussian filter with `kernel_size=7` and `sigma=2`. I combined the two low frequencies by doing `(lowPass1*mask1 + lowPass2*mask2) / (mask1 + mask2 + 1e-8)` wherever either mask was nonzero. Adding `1e-8` prevented division by 0 but still ensured a very small pixel value. The high frequency image was obtained by subtracting the original image by the low frequency image. To merge the high frequency images, I selected the corresponding pixels based on the greater value in the mask. For the final blended mosaic, I added the two blends together.
-
-Here are warped images and blended mosaics (below all warped images) for my 3 examples. The original images for the mosaics can be found at the top of the website.
+Here are warped images and unblended mosaics (below all warped images) for my 3 examples.
 
 | Warped Image 1 | Warped Image 2 |
 | :----: | :----: |
 | <img src="media/breezeway1_bigger_warp1.jpg" width="400"/> | <img src="media/breezeway2_bigger_warp2.jpg" width="400"/> |
 | <img src="media/kitchen12_noblend_bigger_warp1.jpg" width="400"/> | <img src="media/kitchen12_noblend_bigger_warp2.jpg" width="400"/> |
 | <img src="media/souvenir1_warped.jpg" width="400"/> | <img src="media/souvenir2_warped.jpg" width="400"/> |
+
+<br> <img src="media/breezeway12_bigger_noblend.jpg" width="600" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/kitchen12_noblend_bigger.jpg" width="600" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/souvenir12_noblend.jpg" width="600" style="display: block; margin: 0 auto;"/>
+
+### Two-Band Blending
+
+I used two-band blending with a distance transform mask to blend my images together. I generated the distance transform mask for both my images using `scipy.ndimage.distance_transform_edt` to find the Euclidean distance to the nearest edge, which was subsequently normalized. Similar to the approach taken in Project 2, I found the low and high frequencies of each image. To get the low frequency image, I used a blurring Gaussian filter with `kernel_size=7` and `sigma=2`. I combined the two low frequencies by doing `(lowPass1*mask1 + lowPass2*mask2) / (mask1 + mask2 + 1e-8)` wherever either mask was nonzero. Adding `1e-8` prevented division by 0 but still ensured a very small pixel value. The high frequency image was obtained by subtracting the original image by the low frequency image. To merge the high frequency images, I selected the corresponding pixels based on the greater value in the mask. For the final blended mosaic, I added the two blends together.
+
+Here are the blended mosaics (using two-band blending) for my 3 examples. The original images for the mosaics can be found at the top of the website, and the warped images and unblended mosaics are above.
 
 <br> <img src="media/breezeway12_bigger_twoband.jpg" width="600" style="display: block; margin: 0 auto;"/>
 <br> <img src="media/kitchen12_twoband_bigger1.jpg" width="600" style="display: block; margin: 0 auto;"/>
@@ -154,3 +160,69 @@ Here is the mask I used for Laplacian blending. I created binary masks for both 
 ## Reflection - Part A
 
 It was interesting to see how we had to translate the images to fit within the bounding box and how we could use matrix multiplication to apply both the homography and translation to an image. It was also cool to apply aspects of Project 2, like the low/high pass filters and Laplacian pyramids, to blend the mosaic images together.
+
+# Feature Matching for Autostitching - Part B
+
+## Harris Interest Point Detector
+To find the interest points, we want to focus on the corners of the image. Using the Harris interest point detector provided, we can find the "peaks" in the matrix and use them as corners. Displayed below are the top 300 points found by the Harris detector and the Harris matrix for the first kitchen image.
+
+| Top 300 Harris Points | Harris Matrix |
+| :----: | :----: |
+| <img src="media/partb/harris_top300_kitchen1.jpg" width="300"/> | <img src="media/partb/harrismatrix_kitchen1.jpg" width="300"/> |
+
+## Adaptive Non-Maximal Suppression (ANMS)
+
+ANMS resolves the issue of the selected points being too close together/clustered, as we can see in the top Harris points image above. ANMS allows us to identify the strongest corners from the image, but we can distribute the points across the image for better feature matching later on. We use the `dist2()` function provided to find pairwise distances between points. Then, we create a mask based on `c_robust` to ensure that we keep corners that are both sufficiently spread out and also have strong enough scores relative to each other. We sort the corners in decreasing order of radii size, with any points from before that did not satisfy our mask condition being set to infinity. After this minimization, we use these indices to sort the original list of corners passed in and return the top `num_corners`.
+
+| All Corners | ANMS Corners |
+| :----: | :----: |
+| <img src="media/partb/allcoords_kitchen1.jpg" width="300"/> | <img src="media/partb/anms_top120_kitchen1.jpg" width="300"/> |
+
+## Feature Descriptor Extraction
+
+For each corner found by ANMS, we find a 40x40 pixel region around the point found. We then resize it to an 8x8 region and normalize it by subtracting the mean and dividing by the standard deviation. We flatten the 8x8 region and stack it into an `Nx192` matrix (where each array flattened has length 64, multiplied by 3 due to the color channels) of flattened feature descriptors. We repeat this for both images.
+
+Here are some example 8x8 feature descriptors found:
+
+<img src="media/partb/patch3_extract_kitchen1.jpg" width="200"/>
+<img src="media/partb/patch11_extract_kitchen1.jpg" width="200"/>
+<br> <img src="media/partb/patch16_extract_kitchen1.jpg" width="200"/>
+<img src="media/partb/patch18_extract_kitchen1.jpg" width="200"/>
+
+## Feature Matching
+
+We have a set of features for both images from the previous part. Now, we need to match the features together. First, we calculate the pairwise differences between each (flattened) feature descriptor. We find the sum of squared differences (SSD) over the last dimension. We find the nearest-neighbor distances by sorting the SSD found before. We use Lowe's technique in order to minimize outliers. I used a Lowe's threshold of 0.5, which means that the nearest neighbor should be a significantly better match than the second-nearest neighbor. The matched points are shown below.
+
+| Threshold = 0.5 | Threshold = 0.8 |
+| :----: | :----: |
+| <img src="media/partb/corrpoints_matched_thresh05_kitchen1.jpg" width="300"/> | <img src="media/partb/corrpoints_matched_thresh08_kitchen1.jpg" width="300"/> |
+
+## RANSAC
+
+RANSAC is used to increase least-squares' robustness when computing the homography. The input points are the ANMS-determined points, where the matches are then filtered from Lowe's method before. We randomly sample 4 pairs of points and compute the homographies. We track the inliers, which are points that land within a given threshold. At each iteration of the algorithm, we see if there are more inliers than the previous best homography computed. If so, we update our best points accoridngly. This helps us minimize outliers. I used a threshold of 0.8 and 2500 iterations for my RANSAC algorithm. Below are the points matched by RANSAC for the first and second kitchen images.
+
+<img src="media/partb/ransac_matched_kitchen12.jpg" width="400"/>
+
+## Results
+
+Here are the results of using RANSAC and automatic feature matching on the images from before. I similarly provided the warped images, unblended mosaics, and the two-band blended mosaics. I compare the mosaics created with manual correspondences from Part A and the mosaics created with automatic correspondences.
+
+| Warped Image 1 | Warped Image 2 |
+| :----: | :----: |
+| <img src="media/partb/ransac_warp_kitchen1.jpg" width="400"/> | <img src="media/partb/ransac_warp_kitchen2.jpg" width="400"/> |
+| <img src="media/partb/ransac_warp_souvenir1.jpg" width="400"/> | <img src="media/partb/ransac_warp_souvenir2.jpg" width="400"/> |
+| <img src="media/partb/ransac_warp_breezeway1.jpg" width="400"/> | <img src="media/partb/ransac_warp_breezeway2.jpg" width="400"/> |
+
+<br> <img src="media/partb/ransac_mosaic_noblend_kitchen12.jpg" width="600" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/partb/ransac_noblend_souvenir12.jpg" width="600" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/partb/ransac_noblend_breezeway12.jpg" width="600" style="display: block; margin: 0 auto;"/>
+
+| Manual Correspondences | Automatic Correspondences |
+| :----: | :----: |
+| <img src="media/kitchen12_twoband_bigger1.jpg" width="500"/> | <img src="media/partb/ransac_blended_kitchen12.jpg" width="500"/> |
+| <img src="media/souvenir12_twoband.jpg" width="500"/> | <img src="media/partb/ransac_blended_souvenir12_larger.jpg" width="500"/> |
+| <img src="media/breezeway12_bigger_twoband.jpg" width="500"/> | <img src="media/partb/ransac_blended_breezeway12.jpg" width="500"/> |
+
+## Reflection - Part B
+
+It was really interesting to see how the automatic correspondences were more precise than my manual ones. There were small features that didn't align in my mosaics since I was slightly off, but there were resolved during Part B. The coolest part of this project is being able to plot the automatic correspondences side-by-side after each step to see how they improved and how outliers were minimized.
