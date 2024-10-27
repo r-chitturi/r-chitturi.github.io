@@ -236,4 +236,4 @@ Here are the results of using RANSAC and automatic feature matching on the image
 
 ## Reflection - Part B
 
-It was really interesting to see how the automatic correspondences were more precise than my manual ones. There were small features that didn't align in my mosaics since I was slightly off, but there were resolved during Part B. The coolest part of this project is being able to plot the automatic correspondences side-by-side after each step to see how they improved and how outliers were minimized.
+It was really interesting to see how the automatic correspondences were more precise than my manual ones. There were small features that didn't align in my mosaics since I was slightly off, but there were resolved during Part B. The coolest part of this project is being able to plot the automatic correspondences side-by-side after each step to see how they improved and how outliers were minimized. As mentioned in Part A, it was interesting to see how we could use matrix multiplication to apply both the homography and translation to an image. It was also cool to apply the low/high pass filters and Laplacian pyramids to blend the mosaic images together.
