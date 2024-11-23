@@ -11,7 +11,15 @@ I use a random seed of 1880 throughout the project. I use the three following ca
 
 Here are the outputs of the 3 prompts when `num_inference_steps=5`.
 
+| Mountain | Man | Rocket |
+| :----: | :----: | :----: |
+| <img src="media/proj5a/part0/oil_mountain_5steps.png" width="150"/> | <img src="media/proj5a/part0/man_hat_5steps.png" width="150"/> | <img src="media/proj5a/part0/rocket_5steps.png" width="150"/> | <img src="media/proj5a/part1.3/noisy750.png" width="150"/> |
+
 Here are the outputs of the 3 prompts when `num_inference_steps=20`.
+
+| Mountain | Man | Rocket |
+| :----: | :----: | :----: |
+| <img src="media/proj5a/part0/oil_mountain_20steps.png" width="150"/> | <img src="media/proj5a/part0/man_hat_20steps.png" width="150"/> | <img src="media/proj5a/part0/rocket_20steps.png" width="150"/> | <img src="media/proj5a/part1.3/noisy750.png" width="150"/> |
 
 ### 1.1 Implementing the Forward Process
 
@@ -19,19 +27,19 @@ I implemented the `forward()` function, which takes in a clean image and adds no
 
 | Original | Noisy, t=250 | Noisy, t=500 | Noisy, t=750 |
 | :----: | :----: | :----: | :----: |
-| <img src="media/proj5a/test_im.png" width="100"/> | <img src="media/proj5a/part1.3/noisy250.png" width="100"/> | <img src="media/proj5a/part1.3/noisy500.png" width="100"/> | <img src="media/proj5a/part1.3/noisy750.png" width="100"/> |
+| <img src="media/proj5a/test_im.png" width="150"/> | <img src="media/proj5a/part1.3/noisy250.png" width="150"/> | <img src="media/proj5a/part1.3/noisy500.png" width="150"/> | <img src="media/proj5a/part1.3/noisy750.png" width="150"/> |
 
 ### 1.2 Classical Denoising
 
-Using a Gaussian filter, we blur the noisy images from 1.1 at each of the 3 timesteps in an attempt to denoise them. Here are the noisy images again, following by the corresponding blurred images.
+Using a Gaussian filter, we blur the noisy images from Part 1.1 at each of the 3 timesteps in an attempt to denoise them. Here are the noisy images again, following by the corresponding blurred images.
 
 | Noisy, t=250 | Noisy, t=500 | Noisy, t=750 |
 | :----: | :----: | :----: |
-| <img src="media/proj5a/part1.3/noisy250.png" width="100"/> | <img src="media/proj5a/part1.3/noisy500.png" width="100"/> | <img src="media/proj5a/part1.3/noisy750.png" width="100"/> |
+| <img src="media/proj5a/part1.3/noisy250.png" width="150"/> | <img src="media/proj5a/part1.3/noisy500.png" width="150"/> | <img src="media/proj5a/part1.3/noisy750.png" width="150"/> |
 
 | Blurred, t=250 | Blurred, t=500 | Blurred, t=750 |
 | :----: | :----: | :----: |
-| <img src="media/proj5a/part1.3/gaussian_blur250.png" width="100"/> | <img src="media/proj5a/part1.3/blur_500.png" width="100"/> | <img src="media/proj5a/part1.3/blur_750.png" width="100"/> |
+| <img src="media/proj5a/part1.3/gaussian_blur250.png" width="150"/> | <img src="media/proj5a/part1.3/blur_500.png" width="150"/> | <img src="media/proj5a/part1.3/blur_750.png" width="150"/> |
 
 ### 1.3 One-Step Denoising
 
@@ -39,11 +47,11 @@ Using a pretrained diffusion model, I pass in timestep `t` as a parameter for it
 
 | Noisy, t=250 | Noisy, t=500 | Noisy, t=750 |
 | :----: | :----: | :----: |
-| <img src="media/proj5a/part1.3/noisy250.png" width="100"/> | <img src="media/proj5a/part1.3/noisy500.png" width="100"/> | <img src="media/proj5a/part1.3/noisy750.png" width="100"/> |
+| <img src="media/proj5a/part1.3/noisy250.png" width="150"/> | <img src="media/proj5a/part1.3/noisy500.png" width="150"/> | <img src="media/proj5a/part1.3/noisy750.png" width="150"/> |
 
 | One-Step Denoised, t=250 | One-Step Denoised, t=500 | One-Step Denoised, t=750 |
 | :----: | :----: | :----: |
-| <img src="media/proj5a/part1.3/cleanest250.png" width="100"/> | <img src="media/proj5a/part1.3/clean_est500.png" width="100"/> | <img src="media/proj5a/part1.3/clean_est750.png" width="100"/> |
+| <img src="media/proj5a/part1.3/cleanest250.png" width="150"/> | <img src="media/proj5a/part1.3/clean_est500.png" width="150"/> | <img src="media/proj5a/part1.3/clean_est750.png" width="150"/> |
 
 ### 1.4 Iterative Denoising
 
@@ -51,11 +59,11 @@ To iteratively denoise the image, I created a list of `strided_timesteps` to den
 
 | Noisy, t=90 | Noisy, t=240 | Noisy, t=390 | Noisy, t=540 | Noisy, t=690 |
 | :----: | :----: | :----: | :----: | :----: |
-| <img src="media/proj5a/part1.4/noisy_campanile_90_1.png" width="100"/> | <img src="media/proj5a/part1.4/noisy_campanile_240_1.png" width="100"/> | <img src="media/proj5a/part1.4/noisy_campanile_390_1.png" width="100"/> | <img src="media/proj5a/part1.4/noisy_campanile_540_1.png" width="100"/> | <img src="media/proj5a/part1.4/noisy_campanile_690_1.png" width="100"/> |
+| <img src="media/proj5a/part1.4/noisy_campanile_90_1.png" width="150"/> | <img src="media/proj5a/part1.4/noisy_campanile_240_1.png" width="150"/> | <img src="media/proj5a/part1.4/noisy_campanile_390_1.png" width="150"/> | <img src="media/proj5a/part1.4/noisy_campanile_540_1.png" width="150"/> | <img src="media/proj5a/part1.4/noisy_campanile_690_1.png" width="150"/> |
 
 | Original | Iteratively Denoised | One-Step Denoised | Gaussian Blurred |
 | :----: | :----: | :----: | :----: |
-| <img src="media/proj5a/test_im.png" width="100"/> | <img src="media/proj5a/part1.4/iterative_denoise_1.png" width="100"/> | <img src="media/proj5a/part1.4/onestep_denoise_1.png" width="100"/> | <img src="media/proj5a/part1.4/gaussian_blur_1.png" width="100"/> |
+| <img src="media/proj5a/test_im.png" width="150"/> | <img src="media/proj5a/part1.4/iterative_denoise_1.png" width="150"/> | <img src="media/proj5a/part1.4/onestep_denoise_1.png" width="150"/> | <img src="media/proj5a/part1.4/gaussian_blur_1.png" width="150"/> |
 
 ### 1.5 Diffusion Model Sampling
 
@@ -63,7 +71,7 @@ I sampled 5 images from the diffusion model using the prompt `'a high quality ph
 
 | Sample 1 | Sample 2 | Sample 3 | Sample 4 | Sample 5 |
 | :----: | :----: | :----: | :----: |  :----: |
-| <img src="media/proj5a/part1.5/sample1.png" width="100"/> | <img src="media/proj5a/part1.5/sample2.png" width="100"/> | <img src="media/proj5a/part1.5/sample3.png" width="100"/> | <img src="media/proj5a/part1.5/sample4.png" width="100"/> | <img src="media/proj5a/part1.5/sample5.png" width="100"/> |
+| <img src="media/proj5a/part1.5/sample1.png" width="150"/> | <img src="media/proj5a/part1.5/sample2.png" width="150"/> | <img src="media/proj5a/part1.5/sample3.png" width="150"/> | <img src="media/proj5a/part1.5/sample4.png" width="150"/> | <img src="media/proj5a/part1.5/sample5.png" width="150"/> |
 
 ### 1.6 Classifier-Free Guidance (CFG)
 
@@ -71,23 +79,23 @@ I computed both a conditional and unconditional noise estimate in order to impro
 
 | Sample 1 | Sample 2 | Sample 3 | Sample 4 | Sample 5 |
 | :----: | :----: | :----: | :----: |  :----: |
-| <img src="media/proj5a/part1.6/image1.png" width="100"/>  | <img src="media/proj5a/part1.6/image2.png" width="100"/> | <img src="media/proj5a/part1.6/image3.png" width="100"/> | <img src="media/proj5a/part1.6/image4.png" width="100"/> | <img src="media/proj5a/part1.6/image7.png" width="100"/> |
+| <img src="media/proj5a/part1.6/image1.png" width="150"/>  | <img src="media/proj5a/part1.6/image2.png" width="150"/> | <img src="media/proj5a/part1.6/image3.png" width="150"/> | <img src="media/proj5a/part1.6/image4.png" width="150"/> | <img src="media/proj5a/part1.6/image7.png" width="150"/> |
 
 ### 1.7 Image-to-Image Translation
 
-After getting an initial noisy image of the Campanile, I ran the iterative denoising at various starting indices: `[1, 3, 5, 7, 10, 20]`. I also used the prompt `'a high quality photo'`. For the following parts, I omit the images at `i_start=1` since they are mostly random/unrelated and are often captured by `i_start=3`.
+After getting an initial noisy image of the Campanile, I ran the iterative denoising at various starting indices: `[1, 3, 5, 7, 10, 20]`. I also used the prompt `'a high quality photo'`. For the following parts, I omit the images at `i_start=1` since they are mostly random/unrelated and are similar to the images produced by `i_start=3`.
 
 | `i_start=3` | `i_start=5` | `i_start=7` | `i_start=10` | `i_start=20` | Campanile | 
 | :----: | :----: | :----: | :----: |  :----: |  :----: |
-| <img src="media/proj5a/part1.7/testim_noise3.png" width="100"/> | <img src="media/proj5a/part1.7/testim_noise5.png" width="100"/> | <img src="media/proj5a/part1.7/testim_noise7.png" width="100"/> | <img src="media/proj5a/part1.7/testim_noise10.png" width="100"/> | <img src="media/proj5a/part1.7/testim_noise20.png" width="100"/> | <img src="media/proj5a/test_im.png" width="100"/> | 
+| <img src="media/proj5a/part1.7/testim_noise3.png" width="150"/> | <img src="media/proj5a/part1.7/testim_noise5.png" width="150"/> | <img src="media/proj5a/part1.7/testim_noise7.png" width="150"/> | <img src="media/proj5a/part1.7/testim_noise10.png" width="150"/> | <img src="media/proj5a/part1.7/testim_noise20.png" width="150"/> | <img src="media/proj5a/test_im.png" width="150"/> | 
 
 | `i_start=3` | `i_start=5` | `i_start=7` | `i_start=10` | `i_start=20` | Statue of Liberty | 
 | :----: | :----: | :----: | :----: |  :----: |  :----: |
-| <img src="media/proj5a/part1.7/liberty_noise3.png" width="100"/> | <img src="media/proj5a/part1.7/liberty_noise5.png" width="100"/> | <img src="media/proj5a/part1.7/liberty_noise7.png" width="100"/> | <img src="media/proj5a/part1.7/liberty_noise10.png" width="100"/> | <img src="media/proj5a/part1.7/liberty_noise20.png" width="100"/> | <img src="media/proj5a/part1.7/liberty_image.png" width="100"/>  | 
+| <img src="media/proj5a/part1.7/liberty_noise3.png" width="150"/> | <img src="media/proj5a/part1.7/liberty_noise5.png" width="150"/> | <img src="media/proj5a/part1.7/liberty_noise7.png" width="150"/> | <img src="media/proj5a/part1.7/liberty_noise10.png" width="150"/> | <img src="media/proj5a/part1.7/liberty_noise20.png" width="150"/> | <img src="media/proj5a/part1.7/liberty_image.png" width="150"/>  | 
 
 | `i_start=3` | `i_start=5` | `i_start=7` | `i_start=10` | `i_start=20` | Firework | 
 | :----: | :----: | :----: | :----: |  :----: |  :----: |
-| <img src="media/proj5a/part1.7/firework_noise3.png" width="100"/> | <img src="media/proj5a/part1.7/firework_noise5.png" width="100"/> | <img src="media/proj5a/part1.7/firework_noise7.png" width="100"/> | <img src="media/proj5a/part1.7/firework_noise10.png" width="100"/> | <img src="media/proj5a/part1.7/firework_noise20.png" width="100"/> | <img src="media/proj5a/part1.7/firework.jpg" width="100"/> | 
+| <img src="media/proj5a/part1.7/firework_noise3.png" width="150"/> | <img src="media/proj5a/part1.7/firework_noise5.png" width="150"/> | <img src="media/proj5a/part1.7/firework_noise7.png" width="150"/> | <img src="media/proj5a/part1.7/firework_noise10.png" width="150"/> | <img src="media/proj5a/part1.7/firework_noise20.png" width="150"/> | <img src="media/proj5a/part1.7/firework.jpg" width="150"/> | 
 
 ### 1.7.1 Editing Hand-Drawn and Web Images
 
@@ -95,29 +103,29 @@ Using the same method from above, I found an image from the internet to start wi
 
 | `i_start=3` | `i_start=5` | `i_start=7` | `i_start=10` | `i_start=20` | Flower | 
 | :----: | :----: | :----: | :----: |  :----: |  :----: |
-| <img src="media/proj5a/part1.7.1/web_flower_noise3.png" width="100"/> | <img src="media/proj5a/part1.7.1/web_flower_noise5.png" width="100"/> | <img src="media/proj5a/part1.7.1/web_flower_noise7.png" width="100"/> | <img src="media/proj5a/part1.7.1/web_flower_noise10.png" width="100"/> | <img src="media/proj5a/part1.7.1/web_flower_noise20.png" width="100"/> | <img src="media/proj5a/part1.7.1/web_flower_painting_input.jpg" width="100"/> | 
+| <img src="media/proj5a/part1.7.1/web_flower_noise3.png" width="150"/> | <img src="media/proj5a/part1.7.1/web_flower_noise5.png" width="150"/> | <img src="media/proj5a/part1.7.1/web_flower_noise7.png" width="150"/> | <img src="media/proj5a/part1.7.1/web_flower_noise10.png" width="150"/> | <img src="media/proj5a/part1.7.1/web_flower_noise20.png" width="150"/> | <img src="media/proj5a/part1.7.1/web_flower_painting_input.jpg" width="150"/> | 
 
 I also drew two images using the tool provided to start.
 
 | `i_start=3` | `i_start=5` | `i_start=7` | `i_start=10` | `i_start=20` | Tulip | 
 | :----: | :----: | :----: | :----: |  :----: |  :----: |
-| <img src="media/proj5a/part1.7.1/draw_flower_noise3.png" width="100"/> | <img src="media/proj5a/part1.7.1/draw_flower_noise5.png" width="100"/> | <img src="media/proj5a/part1.7.1/draw_flower_noise7.png" width="100"/> | <img src="media/proj5a/part1.7.1/draw_flower_noise10.png" width="100"/> | <img src="media/proj5a/part1.7.1/draw_flower_noise20.png" width="100"/> | <img src="media/proj5a/part1.7.1/draw_flower_input.png" width="100"/> | 
+| <img src="media/proj5a/part1.7.1/draw_flower_noise3.png" width="150"/> | <img src="media/proj5a/part1.7.1/draw_flower_noise5.png" width="150"/> | <img src="media/proj5a/part1.7.1/draw_flower_noise7.png" width="150"/> | <img src="media/proj5a/part1.7.1/draw_flower_noise10.png" width="150"/> | <img src="media/proj5a/part1.7.1/draw_flower_noise20.png" width="150"/> | <img src="media/proj5a/part1.7.1/draw_flower_input.png" width="150"/> | 
 
 | `i_start=3` | `i_start=5` | `i_start=7` | `i_start=10` | `i_start=20` | Tree | 
 | :----: | :----: | :----: | :----: |  :----: |  :----: |
-| <img src="media/proj5a/part1.7.1/draw_tree_noise3.png" width="100"/> | <img src="media/proj5a/part1.7.1/draw_tree_noise5.png" width="100"/> | <img src="media/proj5a/part1.7.1/draw_tree_noise7.png" width="100"/> | <img src="media/proj5a/part1.7.1/draw_tree_noise10.png" width="100"/> | <img src="media/proj5a/part1.7.1/draw_tree_noise20.png" width="100"/> | <img src="media/proj5a/part1.7.1/draw_tree_input.png" width="100"/> | 
+| <img src="media/proj5a/part1.7.1/draw_tree_noise3.png" width="150"/> | <img src="media/proj5a/part1.7.1/draw_tree_noise5.png" width="150"/> | <img src="media/proj5a/part1.7.1/draw_tree_noise7.png" width="150"/> | <img src="media/proj5a/part1.7.1/draw_tree_noise10.png" width="150"/> | <img src="media/proj5a/part1.7.1/draw_tree_noise20.png" width="150"/> | <img src="media/proj5a/part1.7.1/draw_tree_input.png" width="150"/> | 
 
 ### 1.7.2 Inpainting
 
 With the same method as above, we can also use this for a new application - inpainting. I used a mask to determine which parts of the image I wanted to replace with output from the diffusion model. All other parts of the image outside of the mask remain the same.
 
-Here, I inpainted the top of the Campanile, as well as 2 other images.
+Here, I inpainted the top of the Campanile, as well as inpainting 2 other images.
 
 | Input Image | Mask | Hole to Fill | Inpainted |
 | :----: | :----: | :----: | :----: |
-| <img src="media/proj5a/test_im.png" width="100"/> | <img src="media/proj5a/part1.7.2/campanile_mask.png" width="100"/> | <img src="media/proj5a/part1.7.2/campanile_to_replace.png" width="100"/> | <img src="media/proj5a/part1.7.2/campanile_inpaint5.png" width="100"/> |
-| <img src="media/proj5a/part1.7.2/cat_bookstore.png" width="100"/> | <img src="media/proj5a/part1.7.2/bookstore_mask.png" width="100"/> | <img src="media/proj5a/part1.7.2/bookstore_replace.png" width="100"/> | <img src="media/proj5a/part1.7.2/bookstore_inpaint1.png" width="100"/> |
-| <img src="media/proj5a/part1.7.2/duck_input.png" width="100"/> | <img src="media/proj5a/part1.7.2/duck_mask.png" width="100"/> | <img src="media/proj5a/part1.7.2/duck_replace.png" width="100"/> | <img src="media/proj5a/part1.7.2/duck_inpaint1.png" width="100"/> |
+| <img src="media/proj5a/test_im.png" width="150"/> | <img src="media/proj5a/part1.7.2/campanile_mask.png" width="150"/> | <img src="media/proj5a/part1.7.2/campanile_to_replace.png" width="150"/> | <img src="media/proj5a/part1.7.2/campanile_inpaint5.png" width="150"/> |
+| <img src="media/proj5a/part1.7.2/cat_bookstore.png" width="150"/> | <img src="media/proj5a/part1.7.2/bookstore_mask.png" width="150"/> | <img src="media/proj5a/part1.7.2/bookstore_replace.png" width="150"/> | <img src="media/proj5a/part1.7.2/bookstore_inpaint1.png" width="150"/> |
+| <img src="media/proj5a/part1.7.2/duck_input.png" width="150"/> | <img src="media/proj5a/part1.7.2/duck_mask.png" width="150"/> | <img src="media/proj5a/part1.7.2/duck_replace.png" width="150"/> | <img src="media/proj5a/part1.7.2/duck_inpaint1.png" width="150"/> |
 
 ### 1.7.3 Text-Conditional Image-to-image Translation
 
@@ -127,38 +135,41 @@ I used `'a rocket ship'` with the Campanile image.
 
 | Rocket, Noise 3 | Rocket, Noise 5 | Rocket, Noise 7 | Rocket, Noise 10 | Rocket, Noise 20 | Campanile | 
 | :----: | :----: | :----: | :----: |  :----: |  :----: |
-| <img src="media/proj5a/part1.7.3/campanile_rocket_noise3.png" width="100"/> | <img src="media/proj5a/part1.7.3/campanile_rocket_noise5.png" width="100"/> | <img src="media/proj5a/part1.7.3/campanile_rocket_noise7.png" width="100"/> | <img src="media/proj5a/part1.7.3/campanile_rocket_noise10.png" width="100"/> | <img src="media/proj5a/part1.7.3/campanile_rocket_noise20.png" width="100"/> | <img src="media/proj5a/test_im.png" width="100"/> | 
+| <img src="media/proj5a/part1.7.3/campanile_rocket_noise3.png" width="150"/> | <img src="media/proj5a/part1.7.3/campanile_rocket_noise5.png" width="150"/> | <img src="media/proj5a/part1.7.3/campanile_rocket_noise7.png" width="150"/> | <img src="media/proj5a/part1.7.3/campanile_rocket_noise10.png" width="150"/> | <img src="media/proj5a/part1.7.3/campanile_rocket_noise20.png" width="150"/> | <img src="media/proj5a/test_im.png" width="150"/> | 
 
 Next, I used `'a lithograph of a fish'` with the duck image.
 
 | Fish, Noise 3 | Fish, Noise 5 | Fish, Noise 7 | Fish, Noise 10 | Fish, Noise 20 | Duck | 
 | :----: | :----: | :----: | :----: |  :----: |  :----: |
-| <img src="media/proj5a/part1.7.3/fish_lithograph_duck_noise3.png" width="100"/> | <img src="media/proj5a/part1.7.3/fish_lithograph_duck_noise5.png" width="100"/> | <img src="media/proj5a/part1.7.3/fish_lithograph_duck_noise7.png" width="100"/> | <img src="media/proj5a/part1.7.3/fish_lithograph_duck_noise10.png" width="100"/> | <img src="media/proj5a/part1.7.3/fish_lithograph_duck_noise20.png" width="100"/> | <img src="media/proj5a/part1.7.3/duck.png" width="100"/> | 
+| <img src="media/proj5a/part1.7.3/fish_lithograph_duck_noise3.png" width="150"/> | <img src="media/proj5a/part1.7.3/fish_lithograph_duck_noise5.png" width="150"/> | <img src="media/proj5a/part1.7.3/fish_lithograph_duck_noise7.png" width="150"/> | <img src="media/proj5a/part1.7.3/fish_lithograph_duck_noise10.png" width="150"/> | <img src="media/proj5a/part1.7.3/fish_lithograph_duck_noise20.png" width="150"/> | <img src="media/proj5a/part1.7.3/duck.png" width="150"/> | 
 
 Finally, I used the prompt `'a lithograph of waterfalls'` with this image of the Philopappos Monument in Athens, Greece.
 
 | Waterfall, Noise 3 | Waterfall, Noise 5 | Waterfall, Noise 7 | Waterfall, Noise 10 | Waterfall, Noise 20 | Monument | 
 | :----: | :----: | :----: | :----: |  :----: |  :----: |
-| <img src="media/proj5a/part1.7.3/tower_waterfall_noise3.png" width="100"/> | <img src="media/proj5a/part1.7.3/tower_waterfall_noise5.png" width="100"/> | <img src="media/proj5a/part1.7.3/tower_waterfall_noise7.png" width="100"/> | <img src="media/proj5a/part1.7.3/tower_waterfall_noise10.png" width="100"/> | <img src="media/proj5a/part1.7.3/tower_waterfall_noise20.png" width="100"/> | <img src="media/proj5a/part1.7.3/greek_tower_philopappos_monument.jpg" width="100"/> | 
+| <img src="media/proj5a/part1.7.3/tower_waterfall_noise3.png" width="150"/> | <img src="media/proj5a/part1.7.3/tower_waterfall_noise5.png" width="150"/> | <img src="media/proj5a/part1.7.3/tower_waterfall_noise7.png" width="150"/> | <img src="media/proj5a/part1.7.3/tower_waterfall_noise10.png" width="150"/> | <img src="media/proj5a/part1.7.3/tower_waterfall_noise20.png" width="150"/> | <img src="media/proj5a/part1.7.3/greek_tower_philopappos_monument.jpg" width="150"/> | 
 
 ### 1.8 Visual Anagrams
 
 In this part, we denoise the an image with two conditional prompts, one normally and one after flipping the image around. Then, we flip it back around in order to combine the two noise estimates together. This ultimately produces an image that reflects both prompts, one right-side up, and the other flipped.
 
 First, I use the prompts `'an oil painting of an old man'` and `'an oil painting of people around a campfire'`.
+
 | Old Man | People Around Campfire |
 | :----: | :----: |
-| <img src="media/proj5a/part1.8/2_oldman1.png" width="100"/> | <img src="media/proj5a/part1.8/2_campfire1.png" width="100"/> |
+| <img src="media/proj5a/part1.8/2_oldman1.png" width="150"/> | <img src="media/proj5a/part1.8/2_campfire1.png" width="150"/> |
 
 Next, I use the prompts `'a photo of a dog'` and `'a photo of a man'`.
+
 | Dog | Man |
 | :----: | :----: |
-| <img src="media/proj5a/part1.8/1_dog.png" width="100"/> | <img src="media/proj5a/part1.8/1_man.png" width="100"/> |
+| <img src="media/proj5a/part1.8/1_dog.png" width="150"/> | <img src="media/proj5a/part1.8/1_man.png" width="150"/> |
 
 Finally, I use the prompts `'an oil painting of people around a campfire'` and `'an oil painting of a snowy mountain village'`.
+
 | People Around Campfire | Snowy Village |
 | :----: | :----: |
-| <img src="media/proj5a/part1.8/3_campfire1.png" width="100"/> | <img src="media/proj5a/part1.8/3_snowyvillage1.png" width="100"/> |
+| <img src="media/proj5a/part1.8/3_campfire1.png" width="150"/> | <img src="media/proj5a/part1.8/3_snowyvillage1.png" width="150"/> |
 
 ### 1.9 Hybrid Images
 
@@ -166,19 +177,26 @@ Here, we denoise with two conditional prompts again. This time, we use the low f
 
 First, I create a hybrid image using the prompts `'a lithograph of a skull'` and `'a lithograph of waterfalls'`.
 
-<br> <img src="media/proj5a/part1.9/skull_waterfall_1.png" width="100" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/proj5a/part1.9/skull_waterfall_1.png" width="300" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/proj5a/part1.9/skull_waterfall_1.png" width="50" style="display: block; margin: 0 auto;"/>
 
 Next, I create a hybrid image using the prompts `'a lithograph of a panda'` and `'a lithograph of flower arrangements'`.
 
-<br> <img src="media/proj5a/part1.9/panda_flower1.png" width="100" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/proj5a/part1.9/panda_flower1.png" width="300" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/proj5a/part1.9/panda_flower1.png" width="50" style="display: block; margin: 0 auto;"/>
 
 Finally, I create a hybrid image using the prompts `'a lithograph of houseplants'` and `'a lithograph of a skull'`.
 
-<br> <img src="media/proj5a/part1.9/skull_houseplants1.png" width="100" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/proj5a/part1.9/skull_houseplants1.png" width="300" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/proj5a/part1.9/skull_houseplants1.png" width="50" style="display: block; margin: 0 auto;"/>
 
-### Bells and Whistles - Part A
+## Bells and Whistles - Part A
 
-TBD
+### Course Logo
+
+Using image-to-image translation based on a reference image from the web, I generated the following potential course logo/mascot - a bear holding a camera!
+
+<br> <img src="media/proj5a/bear_camera1.png" width="200" style="display: block; margin: 0 auto;"/>
 
 ## Part B: Diffusion Models from Scratch!
 
@@ -212,20 +230,21 @@ Here are the results after 1 epoch of training.
 
 |           |                                                               |
 |-----------|---------------------------------------------------------------|
-| Input | <img src="media/proj5b/unet/test_epochs1/input_sigma0.5.png"/> |
-| `σ = 0.5` | <img src="media/proj5b/unet/test_epochs1/noisy_sigma0.5.png"/> |
-| Output | <img src="media/proj5b/unet/test_epochs1/output_sigma0.5.png"/> |
+| Input | <img src="media/proj5b/unet/test_epochs1/epoch1_test_input.png"/> |
+| `σ = 0.5` | <img src="media/proj5b/unet/test_epochs1/epoch1_test_noise.png"/> |
+| Output | <img src="media/proj5b/unet/test_epochs1/epoch1_test_output.png"/> |
 
 Here are the results after 5 epochs of training.
+
 |           |                                                               |
 |-----------|---------------------------------------------------------------|
-| Input     | <img src="media/proj5b/unet/test_epochs5/input_sigma0.5.png"/>        |
+| Input     | <img src="media/proj5b/unet/test_epochs5/input_sigma0.5.png"/> |
 | `σ = 0.5` | <img src="media/proj5b/unet/test_epochs5/noisy_sigma0.5.png"/> |
 | Output    | <img src="media/proj5b/unet/test_epochs5/output_sigma0.5.png"/> |
 
 ### 1.2.2 Out-of-Distribution Testing
 
-Now, let's see what the model outputs when we give it images noised with sigma values that it hasn't seen before after 5 epochs of training. I chose to provide more digits than 1 to get a better idea of what's happening.
+Now, let's see what the model outputs when we give it images noised with sigma values that it hasn't seen before. The model has been trained for 5 epochs. I chose to provide more digits than 1 to get a better idea of what's happening. Our model does pretty well up until `σ = 0.6`.
 
 |           | Noisy Image                        |  Output Image                              |
 |-----------|------------------------------------|--------------------------------------------|
@@ -256,11 +275,11 @@ In this sampling algorithm, we do something pretty similar to Part A of this pro
 
 Here are the sampled results after 5 epochs of training.
 
-<br> <img src="media/proj5b/timecond/epoch5_sample_extra1.png" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/proj5b/timecond/epoch5_sample_extra1.png" width="400" style="display: block; margin: 0 auto;"/>
 
 Here are the sampled results after the full 20 epochs of training.
 
-<br> <img src="media/proj5b/timecond/epoch20_sample_extra1.png" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/proj5b/timecond/epoch20_sample_extra1.png" width="400" style="display: block; margin: 0 auto;"/>
 
 ### 2.4 Adding Class-Conditioning to UNet
 
@@ -276,19 +295,27 @@ The sampling process is similar to Part A of the project and to the sampling for
 
 Here are the sampled results after 1 epoch of training.
 
-<br> <img src="media/proj5b/classcond/epoch1_sample1.png" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/proj5b/classcond/epoch1_sample1.png" width="400" style="display: block; margin: 0 auto;"/>
 
 Here are the sampled results after 5 epochs of training.
 
-<br> <img src="media/proj5b/classcond/epoch5_sample1.png" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/proj5b/classcond/epoch5_sample1.png" width="400" style="display: block; margin: 0 auto;"/>
 
 Here are the sampled results after the full 20 epochs of training.
 
-<br> <img src="media/proj5b/classcond/epoch20_sample2.png" style="display: block; margin: 0 auto;"/>
+<br> <img src="media/proj5b/classcond/epoch20_sample2.png" width="400" style="display: block; margin: 0 auto;"/>
 
-### Bells & Whistles - Part B
+## Bells & Whistles - Part B
 
-TBD
+### Sampling GIFs
+
+Here is the sampling GIF of the time-conditioned UNet after the full 20 epochs of training.
+
+<br> <img src="media/proj5b/timecond/timecond_sample_gif1.gif" width="400" style="display: block; margin: 0 auto;"/>
+
+Here is the sampling GIF of the class-conditioned UNet after the full 20 epochs of training.
+
+<br> <img src="media/proj5b/classcond/classcond_sample_gif1.gif" width="400" style="display: block; margin: 0 auto;"/>
 
 ## Project 5 Conclusion
 
