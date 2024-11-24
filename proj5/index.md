@@ -10,10 +10,6 @@
   };
 </script>
 
-<!-- <script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
-</script> -->
-
 # Project 5: Fun with Diffusion Models
 
 ## Part A: The Power of Diffusion Models!
@@ -78,7 +74,7 @@ Using a pretrained diffusion model, I pass in timestep `t` as a parameter for it
 
 ### 1.4 Iterative Denoising
 
-To iteratively denoise the image, I created a list of `strided_timesteps` to denoise starting at the first timestep and repeat this process until a clean image is produced. This produces a better result than the one-step denoising process, which produces a better result than the Gaussian blurring method. I use the following formula for iterative denoising. Adding on to the variables from Part 1.1, $x_{t'}$ is the noisy image at timestep $t'$, where $t' < t$. $\beta_t = {1 - \alpha_t}$, $\alpha_t = {\bar{\alpha_t} / \bar{\alpha}_{t'}}$, and $v_\sigma$ is random noise.
+To iteratively denoise the image, I created a list of `strided_timesteps` to denoise starting at the first timestep and repeat this process until a clean image is produced. This produces a better result than the one-step denoising process, which produces a better result than the Gaussian blurring method. I use the following formula for iterative denoising. Adding on to the variables from Part 1.1, $x_{t'}$ is the noisy image at timestep $t'$, where $t' < t$. $\beta_t = {1 - \alpha_t}$. $\alpha_t = {\bar{\alpha_t} / \bar{\alpha}_{t'}}$. $v_\sigma$ is random noise.
 
 $$
 x_{t'} = \frac{\sqrt{\bar{\alpha}_{t'} \beta_t}}{1 - \bar{\alpha}_t} x_0 
