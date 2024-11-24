@@ -1,4 +1,4 @@
-<script type="text/javascript" async 
+<!-- <script type="text/javascript" async 
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js">
 </script>
 <script type="text/javascript" async>
@@ -8,6 +8,10 @@
       displayMath: [['$$', '$$'], ['\\[', '\\]']]
     }
   };
+</script> -->
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 
 # Project 5: Fun with Diffusion Models
