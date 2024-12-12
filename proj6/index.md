@@ -15,7 +15,7 @@
 ## Depth Refocusing
 For my data, I used the Stanford Light Field Archive chess dataset. This contains 289 rectified images. Since each image had shape `(800, 1400, 3)`, I reorganized all the images in the dataset into a tensor of size `(17, 17, 800, 1400, 3)` since the images were photographed from a 17x17 grid. 
 
-The depth refocusing procedures was as follows. The center image's position in the grid is `(8, 8)`. I iterated through each of the 289 images using a double for loop. For each image, I calculated the distance between it and the center image. I scaled the distances by a chosen `depth_factor` to produce the offsets that the images were shifted by. Using a `depth_factor` scalar made it easier to control the shift linearly (vs. using `alpha` to shift exponentially, as the paper describes). I then actually shifted the images using `np.roll` in both the x- and y-directions. I repeated the steps before for each image (where the center image will remain unshifted). Then, I averaged all of the shifted images together.
+The depth refocusing procedure was as follows. The center image's position in the grid is `(8, 8)`. I iterated through each of the 289 images using a double for loop. For each image, I calculated the distance between it and the center image. I scaled the distances by a chosen `depth_factor` to produce the offsets that the images were shifted by. Using a `depth_factor` scalar made it easier to control the shift linearly (vs. using `alpha` to shift exponentially, as the paper describes). I then actually shifted the images using `np.roll` in both the x- and y-directions. I repeated the steps before for each image (where the center image will remain unshifted). Then, I averaged all of the shifted images together.
 
 Here are my results for shifted at a few selected depth factors.
 
@@ -66,11 +66,15 @@ Here are the results for the toy problem.
 
 First, here are what the output images look like if we naively paste the source image into the target image using the mask. There is clearly no blending, and the lines from the source image are very harshly visible.
 
-| Source Image | Target Image | Mask | Naive Pasting |
-| :----: | :----: | :----: | :----: |
-| <img src="media/data/gradient_domain/penguin.jpg"/> | <img src="media/data/gradient_domain/im3.jpg" width="300"/> | <img src="media/out_gradient/penguin_mask.jpg"/> | <img src="media/out_gradient/penguin_hike_paste_naive.jpg"/> |
-| <img src="media/data/gradient_domain/mars.jpg"/> | <img src="media/data/gradient_domain/nightsky.jpg" width="300"/> | <img src="media/out_gradient/mars_mask.jpg"/> | <img src="media/out_gradient/mars_night_paste_naive.jpg"/> |
-| <img src="media/data/gradient_domain/dog.jpg"/> | <img src="media/data/gradient_domain/field.jpg" width="300"/> | <img src="media/out_gradient/dog_mask.jpg"/> | <img src="media/out_gradient/dog_field_paste_naive.jpg"/> |
+| Source Image | Target Image | Mask |
+| :----: | :----: | :----: |
+| <img src="media/data/gradient_domain/penguin.jpg"/> | <img src="media/data/gradient_domain/im3.jpg" width="300"/> | <img src="media/out_gradient/penguin_mask.jpg"/> |
+| <img src="media/data/gradient_domain/mars.jpg"/> | <img src="media/data/gradient_domain/nightsky.jpg" width="300"/> | <img src="media/out_gradient/mars_mask.jpg"/> | 
+| <img src="media/data/gradient_domain/dog.jpg"/> | <img src="media/data/gradient_domain/field.jpg" width="300"/> | <img src="media/out_gradient/dog_mask.jpg"/> |
+
+| Penguin and Hike | Mars and Sky | Dog and Field |
+| :----: | :----: | :----: |
+|  <img src="media/out_gradient/penguin_hike_paste_naive.jpg"/> | <img src="media/out_gradient/mars_night_paste_naive.jpg"/> | <img src="media/out_gradient/dog_field_paste_naive.jpg"/> |
 
 Here is how Poisson blending was implemented to resolve this issue. The goal is to solve this new optimization equation:
 
@@ -78,13 +82,13 @@ $$
 \min_v \sum_{i \in S, j \in N_i \cap S} (v_i - v_j - s_i + s_j)^2 + \sum_{i \in S, j \in N_i \cap \bar{S}} (v_i - t_j - s_i + s_j)^2
 $$
 
-I first initialized my sparse matrix `A` to have size `num_pixels x num_pixels` since this was more effective than appending to A each time there was a new constraint. `b` started off as a list of zeros of length `num_pixels`. I iterated through all pixels in my source image and checked if the mask was true (within the blending region). If so, then I iterated through the 4 neighboring pixels. If the neighbor was a valid pixel in the source image and was in the mask/within the blending region, then I set the corresponding element in `A` to `-1`. If the neighbor valid but not in the blending region, then I add its value from the target image to `b`. After going through the neighbors, I add the source pixel's value and scale it by the number of valid neighbors we found (i.e. within bounds) to `b`. Then, I subtract the source pixel values of all the valid neighbors from `b`. If the pixel is outside the blending region, then we constrain it to the target image's pixel value and add that to `A`. We correspondingly at the difference between the target and source values to `b`. Finally, we can solve `Ax = b` similarly to the toy problem and reshape the solution into the source image. Then, we iterate over a copy of the target image and replace the pixels in the blending region with our least squares solution. Here are the results of the 3 images above but with this blending method.
+I first initialized my sparse matrix `A` to have size `num_pixels x num_pixels` since this was more effective than appending to A each time there was a new constraint. `b` started off as a list of zeros of length `num_pixels`. I iterated through all pixels in my source image and checked if the mask was true (within the blending region). If so, then I iterated through the 4 neighboring pixels. If the neighbor was a valid pixel in the source image and was in the mask/within the blending region, then I set the corresponding element in `A` to `-1`. If the neighbor valid but not in the blending region, then I add its value from the target image to `b`. After going through the neighbors, I add the source pixel's value and scale it by the number of valid neighbors we found (i.e. within bounds) to `b`. Then, I subtract the source pixel values of all the valid neighbors from `b`. If the pixel is outside the blending region, then we constrain it to the target image's pixel value and add that to `A`. We correspondingly add the difference between the target and source values to `b`. Finally, we can solve `Ax = b` similarly to the toy problem and reshape the solution into the source image. Then, we iterate over a copy of the target image and replace the pixels in the blending region with our least squares solution. Here are the results of the 3 images above but with this blending method.
 
 | Penguin and Hike | Mars and Sky | Dog and Field |
 | :----: | :----: | :----: |
 | <img src="media/out_gradient/penguin_hike_poisson_blend.jpg"/> | <img src="media/out_gradient/mars_night_poisson_blend.jpg"/> | <img src="media/out_gradient/dog_field_poisson_blend.jpg"/> |
 
-The images are blended a lot better. We can no longer see a direct line where the mask ends; instead, the images look pretty well integrated into the background.
+The images are blended a lot better. We can no longer see a direct line where the mask ends; instead, the images look pretty well integrated into the background. The source image's colors have changed slightly since we are trying to minimize gradient differences between the two images, and the intensity range of the blended region may have contributed to this as well.
 
 ## Bells and Whistles - Mixed Gradients
 
@@ -94,7 +98,7 @@ In the previous part, we only used the gradients in the source image as the refe
 | :----: | :----: | :----: |
 | <img src="media/out_gradient/penguin_hike_poisson_mixed.jpg"/> | <img src="media/out_gradient/mars_night_poisson_mixed.jpg"/> | <img src="media/out_gradient/dog_field_poisson_mixed.jpg"/> |
 
-It is interesting to see where the larger gradients are selected. For the Mars image, we can see the tiny stars from the night sky that are on or right next to Mars (within the mask) are now showing up because they have a larger gradient (despite being in the target image). The same is the case for the dog image, since the gradients of the grass are occasionally larger than the dog. This makes the dog look a bit see through, so it may not always be optimal to choose mixed gradients!
+It is interesting to see where the larger gradients are selected. The blending for the penguin was already pretty good, so both results look the same. For the Mars image, we can see the tiny stars from the night sky that are on or right next to Mars (within the mask) are now showing up because they have a larger gradient (despite being in the target image). The same is the case for the dog image, since the gradients of the grass are occasionally larger than the dog. This makes the dog look a bit see through, so it may not always be optimal to choose mixed gradients! The grass at the bottom of the image is not as blurry as the grass in the back, making the gradients stronger as well.
 
 ## Summary
 
